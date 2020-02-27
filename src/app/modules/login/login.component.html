@@ -1,0 +1,23 @@
+<ion-content>
+  <form [formGroup]="loginForm">
+    <ion-list lines="full" class="ion-margin">
+      <ion-item>
+        <ion-label position="fixed">email</ion-label>
+        <ion-input [formControl]="emailFC" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">password</ion-label>
+        <ion-input [formControl]="passwordFC" type="password" placeholder="Enter Input"></ion-input>
+      </ion-item>
+      <div>
+        <ion-spinner *ngIf="loading$ | async" name="bubbles"></ion-spinner>
+      </div>
+      <br>
+      <ion-button class="form__btn-lgn" [disabled]="loginForm.invalid" (click)="onLogin()">
+        Login
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>
+
+
