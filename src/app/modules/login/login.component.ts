@@ -47,9 +47,10 @@ export class LoginComponent extends Destroyer implements OnInit {
         this.closeOnDestroy$(),
         tap((authResponse: AuthResponse) => {
           if (authResponse) {
-            this.auth.token = authResponse.token;
+            this.auth.token = authResponse.access_token;
+            this.auth.expiresAt = authResponse.expires_at;
             this.store.dispatch(new Auth.Authenticated());
-            localStorage.setItem(AUTH_TOKEN, 'Bearer ' + authResponse.token);
+            localStorage.setItem(AUTH_TOKEN, authResponse.access_token);
             this.router.navigate(['/home']);
           }
         }),

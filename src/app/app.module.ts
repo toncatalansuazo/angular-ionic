@@ -12,6 +12,8 @@ import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/authentication/inteceptors/auth-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +31,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })

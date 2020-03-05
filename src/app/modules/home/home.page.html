@@ -1,17 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header-template>
+  <div title-template-header>Home</div>
+</app-header-template>
 <ion-content>
-  
-  <ion-list>
-    
-  </ion-list>
+  <div *ngFor="let alert of alerts">
+    <app-alert [alert]="alert"></app-alert>
+  </div>
 </ion-content>
 

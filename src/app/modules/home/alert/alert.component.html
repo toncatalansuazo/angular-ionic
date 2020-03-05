@@ -1,0 +1,14 @@
+
+  <ion-card style="height: 200px!important;">
+    <ion-card-header style="height: 70%!important;" color="{{ alert.color }}" (click)="navigate(alert.url)">
+      <ion-card-subtitle text-center>{{ alert.title }}</ion-card-subtitle>
+      <ion-card-title text-center>
+        <h6 >{{ alert.subtitle }}</h6>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content text-center>
+        <ion-chip size="large" color="primary">
+            <ion-label color="primary">{{ alert.quantity }} </ion-label>
+        </ion-chip>
+    </ion-card-content>
+</ion-card>

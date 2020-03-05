@@ -4,6 +4,9 @@ import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { HeaderTemplateModule } from 'src/app/shared/ui/header-template/header-template.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 
@@ -19,7 +22,7 @@ import { IonicModule } from '@ionic/angular';
         path: '',
         component: LoginComponent
       }
-    ])
+    ]),
   ],
   exports: [LoginComponent]
 })

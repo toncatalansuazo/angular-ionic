@@ -6,7 +6,7 @@ const routes: Routes = [
   {path: '', canActivate: [AuthGuard], pathMatch: 'prefix', children: [
     {
       path: '',
-      redirectTo: 'login',
+      redirectTo: '/login',
       pathMatch: 'full'
     },
     {

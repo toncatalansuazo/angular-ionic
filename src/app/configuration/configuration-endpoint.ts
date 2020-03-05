@@ -6,4 +6,8 @@ export class ConfigurationEndpoint {
     static getLoginEndpoint(): string {
         return `${this.ecommerceEndpoint}/login`;
     }
+
+    static getAlertEndpoint(): string {
+        return `${this.ecommerceEndpoint}/alerts`;
+    }
 }
