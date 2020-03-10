@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Destroyer } from 'src/app/utils/Destroyer';
 import { Alert, AlertResponse } from './alert/alert.model';
 import { AlertService } from 'src/app/core/http/task/alert/alert.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +13,23 @@ export class HomePage extends Destroyer implements OnInit {
 
   public alerts: Alert[];
 
-  constructor(private alertServ: AlertService) {
+  constructor(private alertServ: AlertService, private router: Router) {
     super();
   }
 
   ngOnInit(): void {
     console.log('init');
     this.alerts = this.getAlerts();
-    this.fetchAlerts();
+    this.subscribeToRoute();
+  }
+
+  private subscribeToRoute() {
+    this.router.events.pipe(this.closeOnDestroy$())
+      .subscribe((e) => {
+        if (e instanceof NavigationEnd) {
+          this.fetchAlerts();
+        }
+      });
   }
 
   onDetails() {

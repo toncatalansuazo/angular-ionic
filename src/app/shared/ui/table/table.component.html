@@ -1,0 +1,13 @@
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let header of headers; let i = index">
+      {{ header }}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngFor="let content of contents; let i = index" size="headers.lenght">
+      <ng-template *ngIf="!content.isMoney; else moneyColumn" select="[content-table-index]">{{ content.data }}</ng-template>
+      <ng-template #moneyColumn select="[content-table-index]">{{ content | currency : 'USD' : 'symbol' : '1.0'  }}</ng-template>
+    </ion-col>
+  </ion-row>
+</ion-grid>

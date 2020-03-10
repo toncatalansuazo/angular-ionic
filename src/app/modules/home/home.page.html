@@ -2,8 +2,11 @@
   <div title-template-header>Home</div>
 </app-header-template>
 <ion-content>
-  <div *ngFor="let alert of alerts">
-    <app-alert [alert]="alert"></app-alert>
-  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let alert of alerts; let i = index">
+        <app-alert class="alert__width-50" [alert]="alert"></app-alert>
+      </ion-col>
+    </ion-row >
+  </ion-grid>
 </ion-content>
-

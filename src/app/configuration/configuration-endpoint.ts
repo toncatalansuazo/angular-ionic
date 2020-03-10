@@ -10,4 +10,8 @@ export class ConfigurationEndpoint {
     static getAlertEndpoint(): string {
         return `${this.ecommerceEndpoint}/alerts`;
     }
+
+    static getOrdersEndpoint(): string {
+        return `${this.ecommerceEndpoint}/orders`;
+    }
 }

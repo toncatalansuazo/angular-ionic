@@ -1,0 +1,8 @@
+{
+  "appId": "cl.toncs.ecommerce",
+  "appName": "ecommerceMovile",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

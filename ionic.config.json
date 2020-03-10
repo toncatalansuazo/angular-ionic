@@ -1,5 +1,7 @@
 {
   "name": "ecommerceMovile",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

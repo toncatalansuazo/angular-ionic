@@ -1,0 +1,18 @@
+<app-header-template>
+  <div title-template-header>Orderenes terminadas</div>
+</app-header-template>
+<ion-content>
+  <ngx-datatable
+        class="material"
+        [rows]="rows"
+        [columns]="columns"
+        headerHeight="50"
+        footerHeight="50"
+        [rowHeight]="'force'"
+        [reorderable]="reorderable"
+        [columnMode]="columnMode"
+        (activate)="onActivate($event)"
+      ></ngx-datatable>
+</ion-content>
+
+

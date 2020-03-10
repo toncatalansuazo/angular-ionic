@@ -17,6 +17,11 @@ export class AppComponent {
       title: 'Home',
       url: '/home',
       icon: 'home'
+    },
+    {
+      title: 'Ordenes Completadas',
+      url: '/orders/completed',
+      icon: 'home'
     }
   ];
 
