@@ -5,39 +5,30 @@ import { Destroyer } from 'src/app/utils/Destroyer';
 import { OrderResponse, Order } from '../order.model';
 import { map } from 'rxjs/operators';
 import { OrderRow } from '../order-row';
+import { Store } from '@ngrx/store';
+import * as fromOrders from '../store/order.reducer';
+import { SetOrdersCompletedAction } from '../store/orders.action';
+import { OrderTableAbstract } from '../order-table-abstract';
 
 @Component({
   selector: 'app-completed-orders',
   templateUrl: './completed-orders.component.html',
   styleUrls: ['./completed-orders.component.scss'],
 })
-export class CompletedOrdersComponent extends Destroyer implements OnInit {
-  columns: any;
-  rows: OrderRow[] = [];
-  columMode: ColumnMode;
-  orders: Order[];
-  constructor(private ordService: OrdersService) {
+export class CompletedOrdersComponent extends OrderTableAbstract implements OnInit {
+
+  constructor(private ordService: OrdersService, private store: Store<fromOrders.OrdersState>) {
     super();
    }
 
   ngOnInit() {
     this.setTableConfiguration();
     this.fetchOrdersCompleted();
-    // subscribe to order completed
+    this.subscribeToOrdersCompleted();
   }
 
-  onSelect({ selected }) {
-    console.log('Select Event', selected);
-  }
-
-  onActivate(event) {
-    if (event.type === 'click') {
-        console.log(event.row);
-    }
-  }
-
-  ionViewDidEnter() {
-    console.log('asdasd');
+  onSelectedOrder(row) {
+    console.log('selected row', row);
   }
 
   private fetchOrdersCompleted(): void {
@@ -45,23 +36,16 @@ export class CompletedOrdersComponent extends Destroyer implements OnInit {
       .pipe(this.closeOnDestroy$(),
         map((res: OrderResponse) => res.data)
       ).subscribe((orders: Order[]) => {
+        this.store.dispatch(new SetOrdersCompletedAction(orders));
         this.orders = orders;
-        const orderRows = [];
-        for (const order of this.orders) {
-          const totalOrder: number = order.delivery_cost + order.total;
-          // set orders completed in store
-          orderRows.push({id: order.id, fecha: order.created_at.split(' ')[0], total: '$ ' + totalOrder});
-        }
-        this.rows = orderRows;
       });
   }
 
-  private setTableConfiguration() {
-    this.columMode = ColumnMode.force;
-    this.columns = [
-      { name: 'id', maxWidth: 50 },
-      { name: 'fecha' },
-      { name: 'total' }
-    ];
+  private subscribeToOrdersCompleted() {
+    this.store.select(fromOrders.getCompleted)
+      .pipe(this.closeOnDestroy$()).subscribe((orders) => {
+        this.orders = orders;
+        this.showOrdersInTable();
+      });
   }
 }
