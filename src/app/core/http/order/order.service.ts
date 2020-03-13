@@ -7,7 +7,7 @@ import { OrderResponse } from 'src/app/modules/orders/order.model';
 @Injectable({
   providedIn: 'root'
 })
-export class OrdersService {
+export class OrderService {
   get url(): string {
     return ConfigurationEndpoint.getOrdersEndpoint();
   }
@@ -18,12 +18,12 @@ export class OrdersService {
     return this.http.get<OrderResponse>(`${this.url}/completed`);
   }
 
-  getPendingOrder() {
-    return null;
+  getPendingOrder(): Observable<OrderResponse> {
+    return this.http.get<OrderResponse>(`${this.url}/pending`);
   }
 
-  getPreparedOrder() {
-    return null;
+  getOrdersToDeliver() {
+    return this.http.get<OrderResponse>(`${this.url}/prepared`);
   }
 
   getOrderPrepared() {

@@ -22,6 +22,16 @@ export class AppComponent {
       title: 'Ordenes Completadas',
       url: '/orders/completed',
       icon: 'home'
+    },
+    {
+      title: 'Ordenes Pendientes',
+      url: '/orders/pending',
+      icon: 'home'
+    },
+    {
+      title: 'Por Enviar',
+      url: '/orders/to-deliver',
+      icon: 'home'
     }
   ];
 

@@ -34,4 +34,14 @@ export abstract class OrderTableAbstract extends Destroyer {
             this.rows = orderRows;
         }
     }
+
+    subscribeToOrder(selector, store) {
+        store.select(selector)
+          .pipe(this.closeOnDestroy$())
+          .subscribe((orders) => {
+            console.log('orders', orders);
+            this.orders = orders;
+            this.showOrdersInTable();
+          });
+      }
 }

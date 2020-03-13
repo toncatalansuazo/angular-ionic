@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CompletedOrdersComponent } from './completed-orders.component';
+import { CompletedOrdersComponent } from './completed.component';
 
 describe('CompletedOrdersComponent', () => {
   let component: CompletedOrdersComponent;

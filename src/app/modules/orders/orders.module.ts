@@ -7,8 +7,10 @@ import { HeaderTemplateModule } from 'src/app/shared/ui/header-template/header-t
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { orderReducer } from './store/order.reducer';
-import { CompletedOrdersComponent } from './completed-orders/completed-orders.component';
+import { CompletedOrdersComponent } from './completed/completed.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PendingComponent } from './pending/pending.component';
+import { ToDeliverComponent } from './to-deliver/to-deliver.component';
 
 @NgModule({
   imports: [
@@ -24,12 +26,12 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
       },
       {
         path: 'pending',
-        component: CompletedOrdersComponent
+        component: PendingComponent
       }
       ,
       {
-        path: 'not-deliver',
-        component: CompletedOrdersComponent
+        path: 'to-deliver',
+        component: ToDeliverComponent
       },
       {
         path: 'missing-transport-deliver',
@@ -41,6 +43,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
       maxAge: 25
     })
   ],
-  declarations: [CompletedOrdersComponent]
+  declarations: [CompletedOrdersComponent, PendingComponent]
 })
 export class OrdersModule {}
