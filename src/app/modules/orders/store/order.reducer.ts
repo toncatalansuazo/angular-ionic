@@ -1,6 +1,8 @@
 import * as fromRoot from '../../../app.reducer';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { OrdersActions, SetOrdersCompletedAction, SET_PENDING_ORDERS_ACTION, SetPendingOrdersAction, SET_ORDERS_TO_DELIVER_ACTION, SetOrdersToDeliverAction } from './orders.action';
+import { OrdersActions, SetOrdersCompletedAction, SET_PENDING_ORDERS_ACTION,
+  SetPendingOrdersAction, SET_ORDERS_TO_DELIVER_ACTION,
+  SetOrdersToDeliverAction } from './orders.action';
 import { Order } from '../order.model';
 import { SET_ORDERS_COMPLETED_ACTION } from './orders.action';
 
@@ -10,7 +12,7 @@ export interface OrdersState {
     toDeliver: Order[];
 }
 
-const initialState: OrdersState = {
+export const initialState: OrdersState = {
     completed: [],
     pending: [],
     toDeliver: []

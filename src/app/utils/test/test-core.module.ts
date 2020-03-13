@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -10,7 +11,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     IonicModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    NgxDatatableModule
+  ],
+  exports: [
+    CommonModule,
+    IonicModule,
+    HttpClientModule,
+    NgxDatatableModule]
 })
 export class TestCoreModule { }

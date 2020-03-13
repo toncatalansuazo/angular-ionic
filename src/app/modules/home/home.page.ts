@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Destroyer } from 'src/app/utils/Destroyer';
 import { Alert, AlertResponse } from './alert/alert.model';
-import { AlertService } from 'src/app/core/http/task/alert/alert.service';
+import { AlertService } from 'src/app/core/http/alert/alert.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -18,7 +18,6 @@ export class HomePage extends Destroyer implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('init');
     this.alerts = this.getAlerts();
     this.subscribeToRoute();
   }
