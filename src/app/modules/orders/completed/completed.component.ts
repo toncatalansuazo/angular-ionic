@@ -14,7 +14,7 @@ import { OrderTableAbstract } from '../order-table-abstract';
 })
 export class CompletedOrdersComponent extends OrderTableAbstract implements OnInit {
 
-  constructor(private ordService: OrderService, private store: Store<fromOrders.OrdersState>) {
+  constructor(private orderService: OrderService, private store: Store<fromOrders.OrdersState>) {
     super();
    }
 
@@ -29,7 +29,7 @@ export class CompletedOrdersComponent extends OrderTableAbstract implements OnIn
   }
 
   private fetchOrdersCompleted(): void {
-    this.ordService.getCompletedOrders()
+    this.orderService.getCompletedOrders()
       .pipe(this.closeOnDestroy$(),
         map((res: OrderResponse) => res.data)
       ).subscribe((orders: Order[]) => {

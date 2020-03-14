@@ -1,5 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Observable, empty, EMPTY, BehaviorSubject, of } from 'rxjs';
+import { Observable, EMPTY, BehaviorSubject, of } from 'rxjs';
+import { Order, OrderResponse } from '../../core/http/order/order.model';
+
+export const mockOrderResponse: OrderResponse = {
+    data: [{
+        id: 12,
+        user_id: 12,
+        delivery_cost: 12,
+        status: 12,
+        total: 12,
+        delivered: 12,
+        created_at: 'string;',
+        updated_at: 'string;'
+    }],
+    success: true
+};
 @Component({
     selector: 'ngx-datatable',
     template: ''
@@ -28,19 +43,31 @@ export class MockStoreService extends BehaviorSubject<any> {
     }
 
     dispatch(data: any): void {}
-    select(data): Observable<any> { return EMPTY; }
+    select(data): Observable<any> { return of({}); }
 }
 
 export class MockOrderService {
-    getCompletedOrders(): Observable<any> {
-        return of({});
+    constructor() { }
+    get url(): string {
+        return '';
+    }
+    getCompletedOrders(): Observable<OrderResponse> {
+        return of(mockOrderResponse);
     }
 
-    getPendingOrder(): Observable<any> {
-        return of({});
+    getPendingOrder(): Observable<OrderResponse> {
+        return of(mockOrderResponse);
     }
 
-    getOrdersToDeliver(): Observable<any> {
-        return of({});
+    getOrdersToDeliver(): Observable<OrderResponse> {
+        return of(mockOrderResponse);
     }
-}
+
+    getOrderPrepared() {
+        return of(mockOrderResponse);
+    }
+
+    setTransportOrder() {}
+
+    setOrderAsPrepared() {}
+  }

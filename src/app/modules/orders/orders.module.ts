@@ -43,6 +43,6 @@ import { ToDeliverComponent } from './to-deliver/to-deliver.component';
       maxAge: 25
     })
   ],
-  declarations: [CompletedOrdersComponent, PendingComponent]
+  declarations: [CompletedOrdersComponent, PendingComponent, ToDeliverComponent]
 })
 export class OrdersModule {}
