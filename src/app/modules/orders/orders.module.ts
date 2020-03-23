@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { HeaderTemplateModule } from 'src/app/shared/ui/header-template/header-template.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { orderReducer } from './store/order.reducer';
@@ -11,31 +10,35 @@ import { CompletedOrdersComponent } from './completed/completed.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PendingComponent } from './pending/pending.component';
 import { ToDeliverComponent } from './to-deliver/to-deliver.component';
+import { DetailComponent as DetailOrderComponent } from './detail/detail.component';
+import { OrderRoute } from './OrderRoute';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { PivotPipe } from 'src/app/shared/pipes/pivot.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HeaderTemplateModule,
+    SharedModule,
     NgxDatatableModule,
     RouterModule.forChild([
       {
-        path: 'completed',
+        path: OrderRoute.COMPLETE,
         component: CompletedOrdersComponent
       },
       {
-        path: 'pending',
+        path: OrderRoute.PENDING,
         component: PendingComponent
       }
       ,
       {
-        path: 'to-deliver',
+        path: OrderRoute.TO_DELIVER,
         component: ToDeliverComponent
       },
       {
-        path: 'missing-transport-deliver',
-        component: CompletedOrdersComponent
+        path: OrderRoute.DETAIL,
+        component: DetailOrderComponent
       }
     ]),
     StoreModule.forFeature('orders', orderReducer),
@@ -43,6 +46,7 @@ import { ToDeliverComponent } from './to-deliver/to-deliver.component';
       maxAge: 25
     })
   ],
-  declarations: [CompletedOrdersComponent, PendingComponent, ToDeliverComponent]
+  declarations: [CompletedOrdersComponent, PendingComponent, ToDeliverComponent,
+    DetailOrderComponent, PivotPipe]
 })
 export class OrdersModule {}

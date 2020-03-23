@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigurationEndpoint } from 'src/app/configuration/configuration-endpoint';
 import { Observable } from 'rxjs';
-import { OrderResponse } from 'src/app/modules/orders/order.model';
+import { OrderResponse, Order } from 'src/app/modules/orders/order.model';
+import { ProductResponse } from '../product/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import { OrderResponse } from 'src/app/modules/orders/order.model';
 export class OrderService {
   get url(): string {
     return ConfigurationEndpoint.getOrdersEndpoint();
+  }
+
+  get orderUrl(): string {
+    return ConfigurationEndpoint.getOrderEndpoint();
   }
 
   constructor(private http: HttpClient) { }
@@ -22,8 +27,12 @@ export class OrderService {
     return this.http.get<OrderResponse>(`${this.url}/pending`);
   }
 
-  getOrdersToDeliver() {
+  getOrdersToDeliver(): Observable<OrderResponse> {
     return this.http.get<OrderResponse>(`${this.url}/prepared`);
+  }
+
+  getProductsInOrder(id): Observable<ProductResponse> {
+    return this.http.get<ProductResponse>(`${this.orderUrl}/products/${id}`);
   }
 
   getOrderPrepared() {

@@ -9,7 +9,7 @@ export abstract class OrderTableAbstract extends Destroyer {
     columMode: ColumnMode;
     orders: Order[];
 
-    abstract onSelectedOrder(row: any): void;
+    abstract onSelectedOrder(row: OrderRow): void;
 
     onActivate(event) {
         if (event.type === 'click') {

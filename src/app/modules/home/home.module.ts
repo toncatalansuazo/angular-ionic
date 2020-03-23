@@ -5,17 +5,17 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import {homeReducer} from './store/home.reducer';
 import { HomePage } from './home.page';
-import { HeaderTemplateModule } from 'src/app/shared/ui/header-template/header-template.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AlertComponent } from './alert/alert.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HeaderTemplateModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',

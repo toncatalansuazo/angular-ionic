@@ -14,4 +14,12 @@ export class ConfigurationEndpoint {
     static getOrdersEndpoint(): string {
         return `${this.ecommerceEndpoint}/orders`;
     }
+
+    static getOrderEndpoint(): string {
+        return `${this.ecommerceEndpoint}/order`;
+    }
+
+    static getPaymentEndpoint(): string {
+        return `${this.ecommerceEndpoint}/payment`;
+    }
 }

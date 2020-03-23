@@ -6,6 +6,10 @@ import { OrderResponse, Order } from '../order.model';
 import { Store } from '@ngrx/store';
 import * as fromOrder from '../store/order.reducer';
 import { SetPendingOrdersAction } from '../store/orders.action';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
+import { OrderRoute } from '../OrderRoute';
+import { OrderRow } from '../order-row';
 
 @Component({
   selector: 'app-pending',
@@ -14,11 +18,15 @@ import { SetPendingOrdersAction } from '../store/orders.action';
 })
 export class PendingComponent extends OrderTableAbstract implements OnInit {
 
-  onSelectedOrder(row: any): void {
-    console.log("Method not implemented.", row);
+  onSelectedOrder(row: OrderRow): void {
+    this.router.navigate([`${OrderRoute.ORDERS}/${OrderRoute.DETAIL}`, {order: JSON.stringify(row)}]);
   }
 
-  constructor(private ordersService: OrderService, private store: Store<fromOrder.OrdersState>) {super(); }
+  constructor(private ordersService: OrderService,
+              private store: Store<fromOrder.OrdersState>,
+              private router: Router) {
+    super();
+  }
 
   ngOnInit() {
     this.setTableConfiguration();

@@ -5,7 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { Destroyer } from 'src/app/utils/Destroyer';
 import { throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer' ;
 import { StartLoadingAction, StopLoadingAction } from 'src/app/shared/ui.actions';
@@ -21,7 +21,8 @@ export class LoginComponent extends Destroyer implements OnInit {
   loginForm: FormGroup;
   emailFC: FormControl = new FormControl('', [
     Validators.required,
-    Validators.min(3)
+    Validators.min(3),
+    Validators.email
   ]);
   passwordFC: FormControl = new FormControl('', [
     Validators.required, Validators.min(3)
@@ -34,12 +35,13 @@ export class LoginComponent extends Destroyer implements OnInit {
   ngOnInit() {
     this.loading$ = this.store.select(fromRoot.getIsLoading);
     this.loginForm = new FormGroup({
-      email: this.emailFC,
-      password: this.passwordFC
+      'email': this.emailFC,
+      'password': this.passwordFC
     });
   }
 
   onLogin(): void {
+    console.log(this.loginForm);
     const user: User = this.loginForm.value;
     this.store.dispatch(new StartLoadingAction());
     this.auth.login(user)

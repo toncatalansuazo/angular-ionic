@@ -23,11 +23,11 @@ export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
   ngOnInit() {
     this.setTableConfiguration();
     this.fetchPendingOrders();
-    this.subscribeToOrder(fromOrder.getPending, this.store);
+    this.subscribeToOrder(fromOrder.getToDeliver, this.store);
   }
 
   fetchPendingOrders() {
-    this.orderService.getPendingOrder()
+    this.orderService.getOrdersToDeliver()
       .pipe(this.closeOnDestroy$(),
         map((res: OrderResponse) => res.data)
       ).subscribe((orders: Order[]) => {

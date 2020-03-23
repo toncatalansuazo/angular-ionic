@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromOrders from '../store/order.reducer';
 import { SetOrdersCompletedAction } from '../store/orders.action';
 import { OrderTableAbstract } from '../order-table-abstract';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-completed',
@@ -14,7 +15,8 @@ import { OrderTableAbstract } from '../order-table-abstract';
 })
 export class CompletedOrdersComponent extends OrderTableAbstract implements OnInit {
 
-  constructor(private orderService: OrderService, private store: Store<fromOrders.OrdersState>) {
+  constructor(private orderService: OrderService, private store: Store<fromOrders.OrdersState>,
+              private router: Router) {
     super();
    }
 
@@ -26,6 +28,7 @@ export class CompletedOrdersComponent extends OrderTableAbstract implements OnIn
 
   onSelectedOrder(row) {
     console.log('selected row', row);
+    this.router.navigate(['orders/detail']);
   }
 
   private fetchOrdersCompleted(): void {
