@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Destroyer } from 'src/app/utils/Destroyer';
 import { OrderService } from 'src/app/core/http/order/order.service';
 import { tap, map, filter } from 'rxjs/operators';
-import { OrderResponse } from '../order.model';
+import { OrderResponse, DeliveryInfo, Order } from '../order.model';
 import * as fromOrder from '../store/order.reducer';
 import { Store } from '@ngrx/store';
 import { Product, ProductResponse } from 'src/app/core/http/product/product.model';
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { OrderRow } from '../order-row';
 import { SetProductsInOrderAction, SetPaymentOrderAction } from '../store/orders.action';
 import { PaymentService } from 'src/app/core/http/payment/payment.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detail',
@@ -21,12 +22,14 @@ export class DetailComponent extends Destroyer implements OnInit {
   order: OrderRow;
   products$: Observable<Product[]>;
   payment$: Observable<Payment>;
+  deliveryFG: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<fromOrder.State>,
               private orderService: OrderService,
               private paymentService: PaymentService) {
     super();
+    this.createFormTransport();
    }
 
   ngOnInit() {
@@ -39,6 +42,23 @@ export class DetailComponent extends Destroyer implements OnInit {
           this.listenProductInOrder(this.order.id);
           this.listenPayment();
       });
+  }
+
+  onPrepared() {
+    this.orderService.setOrderAsPrepared(this.order)
+      .pipe(
+        this.closeOnDestroy$(),
+        map(response => response.success)
+      ).subscribe((res) => {
+        if (res) {
+          this.order.delivered = 1;
+        }
+      });
+  }
+
+  onSetDelivery() {
+    const deliveryInfo: DeliveryInfo = this.deliveryFG.value;
+    this.orderService.setDeliveryInfo(this.order.id, deliveryInfo);
   }
 
   private listenProductInOrder(orderId: string) {
@@ -67,6 +87,13 @@ export class DetailComponent extends Destroyer implements OnInit {
         const payment: Payment = resPayment.data;
         this.store.dispatch(new SetPaymentOrderAction(payment));
       });
+  }
+
+  private createFormTransport() {
+    this.deliveryFG = new FormGroup({
+      deliveryId: new FormControl('', [Validators.required, Validators.min(1)]),
+      deliveryName: new FormControl('', [Validators.required, Validators.min(1)])
+    });
   }
 
 }

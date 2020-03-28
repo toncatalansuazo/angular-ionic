@@ -3,20 +3,26 @@
 </app-header-template>
 <ion-content>
   <ion-list class="order__list">
-    <ion-item-divider>
+    <ion-item-divider color="primary">
       <ion-label>Orden</ion-label>
     </ion-item-divider>
     <ion-item>
-      <ion-label>Id</ion-label>
-      <ion-label slot="end">{{ order.id }}</ion-label>
+      <ion-label class="ion-text-wrap">Id</ion-label>
+      <ion-note slot="end">
+        {{ order.id }}
+      </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label>Fecha creacion</ion-label>
-      <ion-label slot="end">{{ order.fecha }}</ion-label>
+      <ion-label class="ion-text-wrap">Fecha creacion</ion-label>
+      <ion-note slot="end">
+        {{ order.fecha }}
+      </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label>Total Pagado</ion-label>
-      <ion-label slot="end">{{ order.total }}</ion-label>
+      <ion-label class="ion-text-wrap">Total Pagado</ion-label>
+      <ion-note slot="end">
+        {{ order.total }}
+      </ion-note>
     </ion-item>
     <ion-item-group>
       <ion-item-divider>
@@ -26,74 +32,116 @@
     <ion-grid>
       <ion-row *ngFor="let product of products$ | async">
         <ion-item-divider>
-          <ion-col class="col-list-products" size="2">
+          <ion-col class="col-list-products" >
             <ion-item>
               <ion-avatar >
                 <img src="{{ product.featured }}">
               </ion-avatar>
             </ion-item>
           </ion-col>
-          <ion-col class="col-products" size="4">
-            <ion-label>{{ product.name }}</ion-label>
+          <ion-col class="col-products">
+            <ion-label class="ion-text-wrap">{{ product.name }}</ion-label>
           </ion-col>
-          <ion-col *ngIf="product.pivot" class="col-products ion-text-center" size="5">
+          <ion-col *ngIf="product.pivot" class="col-products ion-text-center" >
             {{ product.pivot | pivotFormat }}
           </ion-col>
         </ion-item-divider>
       </ion-row>
     </ion-grid>
     <ion-item-group>
-      <ion-item-divider>
+      <ion-item-divider color="primary">
         <ion-label>Informacion Despacho</ion-label>
       </ion-item-divider>
     </ion-item-group>
     <div *ngIf="(payment$| async)">
       <ion-item>
-        <ion-label>Ciudad</ion-label>
-        <ion-label slot="end">{{ (payment$| async).city }}</ion-label>
+        <ion-label class="ion-text-wrap">Ciudad</ion-label>
+        <ion-note slot="end">
+          {{ (payment$| async).city }}
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Direccion</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Direccion</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).comuna }} {{ (payment$| async).direction }}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Nombre Cliente</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Nombre Cliente</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).name }} {{ (payment$| async).lastName }}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Rut/Identificacion</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Rut/Identificacion</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).documentId }}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Celular</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Celular</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).phone }}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Email</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Email</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).email }}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Numero Envio</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Numero Envio</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).deliveryId || 'No ingresado'}}
-        </ion-label>
+        </ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Nombre Transporte</ion-label>
-        <ion-label slot="end">
+        <ion-label class="ion-text-wrap">Nombre Transporte</ion-label>
+        <ion-note slot="end">
           {{ (payment$| async).deliveryName || 'No ingresado'}}
-        </ion-label>
+        </ion-note>
       </ion-item>
+    </div>
+    <ion-item-group>
+      <ion-item-divider color="primary">
+        <ion-label>Informacion Envio</ion-label>
+      </ion-item-divider>
+    </ion-item-group>
+    <div padding *ngIf="order.delivered === 0; else prepared">
+      <ion-button size="large" 
+        type="button"
+        (click)="onPrepared()"
+        expand="block">
+        Orden Preparada
+      </ion-button>
+      <ion-label class="ion-text-wrap">
+        *Envia email a cliente avisando que su orden esta lista para ser eviada
+      </ion-label>
+    </div>
+    <ng-template #prepared>
+      <ion-item>
+        <ion-label class="ion-text-wrap">Estado</ion-label>
+        <ion-note slot="end">
+          Preparada pero no enviada
+        </ion-note>
+      </ion-item>
+    </ng-template>
+    <br>
+    <div *ngIf="!(payment$| async)?.deliveryName; else prepared" padding>
+      <form [formGroup]="deliveryFG" (ngSubmit)="onSetDelivery()">
+        <ion-label position="stacked">Numero de Orden</ion-label>
+        <ion-input placeholder="Ingresar numero de orden" type="text" formControlName="deliveryId"></ion-input>
+        <ion-label position="stacked">Nombre Transporte</ion-label>
+        <ion-select formControlName="deliveryName" okText="Confirmar" placeholder="Selecciona uno" cancelText="Cancelar">
+            <ion-select-option value="Tur Bus/Starken">Tur Bus/Starken</ion-select-option>
+            <ion-select-option value="TNT">TNT</ion-select-option>
+            <ion-select-option value="Pullman Cargo">Pullman Cargo</ion-select-option>
+        </ion-select>
+        <div padding>
+            <ion-button size="large" type="submit" [disabled]="deliveryFG.invalid"  expand="block" >Enviar</ion-button>
+        </div>
+    </form>
     </div>
   </ion-list>
 </ion-content>

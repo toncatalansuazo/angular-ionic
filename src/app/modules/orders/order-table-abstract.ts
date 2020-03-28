@@ -30,7 +30,12 @@ export abstract class OrderTableAbstract extends Destroyer {
         const orderRows = [];
         for (const order of this.orders) {
             const totalOrder: number = order.delivery_cost + order.total;
-            orderRows.push({id: order.id, fecha: order.created_at.split(' ')[0], total: '$ ' + totalOrder});
+            orderRows.push({id: order.id,
+                fecha: order.created_at.split(' ')[0],
+                total: '$ ' + totalOrder,
+                status: order.status,
+                delivered: order.delivered
+            });
             this.rows = orderRows;
         }
     }

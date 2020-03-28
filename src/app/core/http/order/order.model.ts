@@ -17,3 +17,8 @@ export interface Order {
 export class DeliveryInfo {
   constructor(public deliveryName: string, public deliveryId: number) {  }
 }
+
+export interface DeliveryInfoResponse {
+  data: number;
+  success: boolean;
+}
