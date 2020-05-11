@@ -1,8 +1,11 @@
 import * as fromRoot from '../../../app.reducer';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { OrdersActions, SetOrdersCompletedAction, SET_PENDING_ORDERS_ACTION,
-  SetPendingOrdersAction, SET_ORDERS_TO_DELIVER_ACTION,
-  SetOrdersToDeliverAction, 
+import { OrdersActions,
+  SetOrdersCompletedAction,
+  SET_PENDING_ORDERS_ACTION,
+  SetPendingOrdersAction,
+  SET_ORDERS_TO_DELIVER_ACTION,
+  SetOrdersToDeliverAction,
   SET_PRODUCTS_IN_ORDER_ACTION,
   SetProductsInOrderAction,
   SET_PAYMENT_ORDER_ACTION,
@@ -10,6 +13,8 @@ import { OrdersActions, SetOrdersCompletedAction, SET_PENDING_ORDERS_ACTION,
 import { Order } from '../order.model';
 import { SET_ORDERS_COMPLETED_ACTION } from './orders.action';
 import { Product } from 'src/app/core/http/product/product.model';
+import { Payment } from '../../../core/http/payment/payment.model';
+
 
 export interface OrdersState {
     completed: Order[];

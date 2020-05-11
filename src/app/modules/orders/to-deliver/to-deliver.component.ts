@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
 
   onSelectedOrder(row: any): void {
-    console.log("Method not implemented.");
+    console.log('Method not implemented.');
   }
 
   constructor(private store: Store<fromOrder.OrdersState>, private orderService: OrderService) { super(); }

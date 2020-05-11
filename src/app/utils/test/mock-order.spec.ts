@@ -38,8 +38,8 @@ export class MockHeaderTemplate {
 }
 
 export class MockStoreService extends BehaviorSubject<any> {
-    constructor(private _initialState: any) {
-        super(_initialState);
+    constructor(private initialState: any) {
+        super(initialState);
     }
 
     dispatch(data: any): void {}

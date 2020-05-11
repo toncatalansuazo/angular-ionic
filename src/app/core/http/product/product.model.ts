@@ -5,6 +5,7 @@ export interface ProductResponse {
 export class Product {
     constructor() {}
     id: number;
+    // tslint:disable-next-line: variable-name
     category_id: number;
     name: string;
     price: number;
@@ -14,7 +15,9 @@ export class Product {
     featured: string;
     unit: string;
     recommend: number;
+    // tslint:disable-next-line: variable-name
     created_at: string;
+    // tslint:disable-next-line: variable-name
     updated_at: string;
     benefits?: string;
     visibility?: boolean;
@@ -29,4 +32,4 @@ export interface Pivot {
     final_price: number;
     created_at: string;
     updated_at: string;
-  }
+}

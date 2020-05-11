@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigurationEndpoint } from 'src/app/configuration/configuration-endpoint';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PaymentResponse } from './payment.model';
 
 @Injectable({
   providedIn: 'root'

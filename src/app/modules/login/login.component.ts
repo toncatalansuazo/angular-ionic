@@ -35,8 +35,8 @@ export class LoginComponent extends Destroyer implements OnInit {
   ngOnInit() {
     this.loading$ = this.store.select(fromRoot.getIsLoading);
     this.loginForm = new FormGroup({
-      'email': this.emailFC,
-      'password': this.passwordFC
+      email: this.emailFC,
+      password: this.passwordFC
     });
   }
 

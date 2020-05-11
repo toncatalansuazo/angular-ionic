@@ -7,6 +7,9 @@ import { TestCoreModule } from 'src/app/utils/test/test-core.module';
 import { Router, Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from 'src/app/core/authentication/auth/auth.service';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import * as fromRoot from '../../app.reducer' ;
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -19,7 +22,15 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       providers: [AuthService],
-      imports: [IonicModule.forRoot(), TestCoreModule, RouterTestingModule.withRoutes(routes)]
+      imports: [
+        IonicModule.forRoot(),
+        TestCoreModule,
+        RouterTestingModule.withRoutes(routes),
+        StoreModule.forRoot(fromRoot.reducers),
+        StoreDevtoolsModule.instrument({
+          maxAge: 25
+        })
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);

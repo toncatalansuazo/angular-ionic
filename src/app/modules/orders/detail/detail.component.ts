@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Destroyer } from 'src/app/utils/Destroyer';
 import { OrderService } from 'src/app/core/http/order/order.service';
-import { tap, map, filter } from 'rxjs/operators';
-import { OrderResponse, DeliveryInfo, Order } from '../order.model';
+import { map } from 'rxjs/operators';
+import { DeliveryInfo } from '../order.model';
 import * as fromOrder from '../store/order.reducer';
 import { Store } from '@ngrx/store';
 import { Product, ProductResponse } from 'src/app/core/http/product/product.model';
@@ -12,6 +12,9 @@ import { OrderRow } from '../order-row';
 import { SetProductsInOrderAction, SetPaymentOrderAction } from '../store/orders.action';
 import { PaymentService } from 'src/app/core/http/payment/payment.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Payment, PaymentResponse } from 'src/app/core/http/payment/payment.model';
+
+
 
 @Component({
   selector: 'app-detail',
@@ -95,5 +98,4 @@ export class DetailComponent extends Destroyer implements OnInit {
       deliveryName: new FormControl('', [Validators.required, Validators.min(1)])
     });
   }
-
 }

@@ -1,9 +1,9 @@
-interface PaymentResponse {
+export interface PaymentResponse {
     data: Payment;
     success: boolean;
 }
 
-interface Payment {
+export interface Payment {
     id: number;
     order_id: number;
     amount: number;

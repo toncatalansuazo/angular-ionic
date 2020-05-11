@@ -1,6 +1,7 @@
 import { Order } from '../order.model';
 import { Product } from 'src/app/core/http/product/product.model';
 import { Action } from '@ngrx/store';
+import { Payment } from 'src/app/core/http/payment/payment.model';
 
 export const SET_ORDERS_COMPLETED_ACTION = '[ORDERS] set orders completed';
 export const SET_PENDING_ORDERS_ACTION = '[ORDERS] set pending orders';

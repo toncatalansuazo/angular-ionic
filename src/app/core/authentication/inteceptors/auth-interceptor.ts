@@ -38,7 +38,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 return event;
             }),
                 catchError((error: HttpErrorResponse) => {
-                    console.log(error)
                     return throwError(error);
                 })
             );

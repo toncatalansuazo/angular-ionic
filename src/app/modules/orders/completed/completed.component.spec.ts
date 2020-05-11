@@ -10,23 +10,27 @@ import * as fromOrder from '../store/order.reducer';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { RouterModule, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const orderReducerInitialState = fromOrder.initialState;
 
-fdescribe('CompletedOrdersComponent', () => {
+describe('CompletedOrdersComponent', () => {
   let component: CompletedOrdersComponent;
   let fixture: ComponentFixture<CompletedOrdersComponent>;
   let orderServiceSpy: OrderService;
 
   beforeEach(async(() => {
     // let store: MockStore<fromOrder.OrdersState>;
-    const initialState = { 'orders': orderReducerInitialState };
+    const initialState = { orders: orderReducerInitialState };
     TestBed.configureTestingModule({
       declarations: [ CompletedOrdersComponent, MockHeaderTemplate ],
       imports: [CommonModule,
         IonicModule,
         HttpClientModule,
-        NgxDatatableModule
+        NgxDatatableModule,
+        RouterModule,
+        RouterTestingModule
       ],
       providers: [
         {
