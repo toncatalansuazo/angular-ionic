@@ -36,7 +36,7 @@ export class OrderService {
     return this.http.get<OrderResponse>(`${this.url}/prepared`);
   }
 
-  getProductsInOrder(id): Observable<ProductResponse> {
+  getProductsInOrder(id: number): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${this.orderUrl}/products/${id}`);
   }
 

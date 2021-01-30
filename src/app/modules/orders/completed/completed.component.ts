@@ -4,7 +4,7 @@ import { OrderResponse, Order } from '../order.model';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as fromOrders from '../store/order.reducer';
-import { SetOrdersCompletedAction } from '../store/orders.action';
+import { SetOrdersCompletedAction } from '../store/order.action';
 import { OrderTableAbstract } from '../order-table-abstract';
 import { Router } from '@angular/router';
 
@@ -15,15 +15,15 @@ import { Router } from '@angular/router';
 })
 export class CompletedOrdersComponent extends OrderTableAbstract implements OnInit {
 
-  constructor(private orderService: OrderService, private store: Store<fromOrders.OrdersState>,
+  constructor(private orderService: OrderService, private _store: Store<fromOrders.OrderState>,
               private router: Router) {
     super();
    }
 
   ngOnInit() {
-    this.setTableConfiguration();
-    this.fetchOrdersCompleted();
-    this.subscribeToOrder(fromOrders.getCompleted, this.store);
+    // this.setTableConfiguration();
+    // this.fetchOrdersCompleted();
+    // this.subscribeToOrder(fromOrders.getCompleted, this._store);
   }
 
   onSelectedOrder(row) {
@@ -36,7 +36,7 @@ export class CompletedOrdersComponent extends OrderTableAbstract implements OnIn
       .pipe(this.closeOnDestroy$(),
         map((res: OrderResponse) => res.data)
       ).subscribe((orders: Order[]) => {
-        this.store.dispatch(new SetOrdersCompletedAction(orders));
+        this._store.dispatch(new SetOrdersCompletedAction(orders));
       });
   }
 }

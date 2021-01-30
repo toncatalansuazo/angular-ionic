@@ -1,20 +1,13 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
-
-import * as fromUi from './shared/ui.reducer';
-import * as fromAuth from './core/auth.reducer';
+import { fromUiReducers, fromUiActions } from './shared/store';
+import { fromAuthAction, fromAuthReducer } from './core/store';
 
 export interface State {
-  ui: fromUi.State;
-  auth: fromAuth.State;
+  ui: fromUiReducers.State;
+  auth: fromAuthReducer.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  ui: fromUi.uiReducer,
-  auth: fromAuth.authReducer
+  ui: fromUiReducers.uiReducer,
+  auth: fromAuthReducer.authReducer
 };
-
-export const getUiState = createFeatureSelector<fromUi.State>('ui');
-export const getIsLoading = createSelector(getUiState, fromUi.getIsLoading);
-export const getAuthState = createFeatureSelector<fromAuth.State>('auth');
-export const getIsAuthenticated = createSelector(getAuthState, fromAuth.getIsAuthenticated);
-

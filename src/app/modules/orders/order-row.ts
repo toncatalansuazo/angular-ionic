@@ -1,5 +1,5 @@
 export interface OrderRow {
-    id: string;
+    id: number;
     fecha: string;
     total: string;
     status: number;

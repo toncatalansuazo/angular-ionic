@@ -14,6 +14,8 @@ import { DetailComponent as DetailOrderComponent } from './detail/detail.compone
 import { OrderRoute } from './OrderRoute';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PivotPipe } from 'src/app/shared/pipes/pivot.pipe';
+import { fromOrderReducer, fromOrderEffects } from './store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import { PivotPipe } from 'src/app/shared/pipes/pivot.pipe';
         component: DetailOrderComponent
       }
     ]),
-    StoreModule.forFeature('orders', orderReducer),
+    StoreModule.forFeature(fromOrderReducer.featureKey, orderReducer),
+    EffectsModule.forFeature([fromOrderEffects.OrderEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     })

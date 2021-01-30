@@ -4,7 +4,7 @@ import * as fromOrder from '../store/order.reducer';
 import { Store } from '@ngrx/store';
 import { OrderService as OrderService } from 'src/app/core/http/order/order.service';
 import { OrderResponse, Order } from '../order.model';
-import { SetOrdersToDeliverAction } from '../store/orders.action';
+// import { SetOrdersToDeliverAction } from '../store/order.action';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -18,21 +18,24 @@ export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
     console.log('Method not implemented.');
   }
 
-  constructor(private store: Store<fromOrder.OrdersState>, private orderService: OrderService) { super(); }
+  constructor(private _store: Store<fromOrder.OrderState>, private orderService: OrderService) { 
+    // super(_store);
+    super(); 
+  }
 
   ngOnInit() {
-    this.setTableConfiguration();
-    this.fetchPendingOrders();
-    this.subscribeToOrder(fromOrder.getToDeliver, this.store);
+    // this.setTableConfiguration();
+    // this.fetchPendingOrders();
+    // this.subscribeToOrder(fromOrder.getToDeliver, this.store);
   }
 
   fetchPendingOrders() {
-    this.orderService.getOrdersToDeliver()
-      .pipe(this.closeOnDestroy$(),
-        map((res: OrderResponse) => res.data)
-      ).subscribe((orders: Order[]) => {
-        this.store.dispatch(new SetOrdersToDeliverAction(orders));
-      });
+    // this.orderService.getOrdersToDeliver()
+    //   .pipe(this.closeOnDestroy$(),
+    //     map((res: OrderResponse) => res.data)
+    //   ).subscribe((orders: Order[]) => {
+    //     this.store.dispatch(new SetOrdersToDeliverAction(orders));
+    //   });
   }
 
 }

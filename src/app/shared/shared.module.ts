@@ -3,9 +3,11 @@ import { HeaderTemplateComponent } from './ui/header-template/header-template.co
 import { ItemComponent } from './ui/item/item.component';
 import { IonicModule } from '@ionic/angular';
 import { PivotPipe } from './pipes/pivot.pipe';
-
+import { StoreModule } from '@ngrx/store';
+import { fromUiReducers } from './store';
 @NgModule({
   imports: [
+    // StoreModule.forFeature(fromUiReducers.featureKey, fromUiReducers.uiReducer),
     IonicModule
   ],
   exports: [HeaderTemplateComponent, ItemComponent],

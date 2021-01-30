@@ -4,15 +4,17 @@
 <ion-content>
   <ngx-datatable
         class="material"
-        [rows]="rows"
+        [rows]="orders$| async "
         [columns]="columns"
         headerHeight="50"
         footerHeight="50"
-        [rowHeight]="'force'"
         [reorderable]="reorderable"
-        [columnMode]="columnMode"
+        [columnMode]="flex"
         (activate)="onActivate($event)"
+        [scrollbarH]="true"
+        [scrollbarV]="true"
+        rowHeight="auto"
+        [limit]="100"
+        [trackByProp]="id"
       ></ngx-datatable>
 </ion-content>
-
-

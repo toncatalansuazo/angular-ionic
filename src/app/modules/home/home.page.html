@@ -4,7 +4,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let alert of alerts; let i = index">
+      <ion-col *ngFor="let alert of alerts$ | async; let i = index">
         <app-alert class="alert__width-50" [alert]="alert"></app-alert>
       </ion-col>
     </ion-row >

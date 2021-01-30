@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Alert, AlertResponse } from 'src/app/modules/home/alert/alert.model';
 import { ConfigurationEndpoint } from 'src/app/configuration/configuration-endpoint';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,52 @@ export class AlertService {
     }
     constructor(private http: HttpClient) {}
 
-    getAlerts(): Observable<AlertResponse> {
-        return this.http.get<AlertResponse>(this.url);
+    getAlerts(): Observable<Alert[]> {
+        return this.http.get(this.url).pipe(
+            map((json: AlertResponse) => this.toAlerts(json))
+        );
+    }
+
+    private toAlerts(json: AlertResponse): Alert[] {
+      const alerts: Alert[] = [
+        new Alert(
+          0,
+          'Ordenes Pendientes',
+          'Que se deben entregar',
+          0,
+          'danger',
+          'orders/pending'
+        ),
+        new Alert(
+          1,
+          'Ordenes Sin Enviar',
+          'Que se deben enviar al transporte',
+          0,
+          'medium',
+          'orders/prepared'
+        ),
+        new Alert(
+          2,
+          'Productos',
+          'Que estan registrados',
+          0,
+          'primary',
+          'products'
+        ),
+        new Alert(
+          3,
+          'Productos Sin Stock',
+          'Que no se estan mostrando',
+          0,
+          'warning',
+          'products/no-stock'
+        ),
+        new Alert(4, 'Post Publicados', 'Post en blog', 0, 'dark', ''),
+      ];
+      return alerts.map(alert => {
+        const quantity = json.data.find(al => al.id === alert.id).quantity;
+        alert.quantity = quantity;
+        return alert;
+      });
     }
 }
