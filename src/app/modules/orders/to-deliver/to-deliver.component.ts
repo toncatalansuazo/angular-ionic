@@ -18,24 +18,14 @@ export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
     console.log('Method not implemented.');
   }
 
-  constructor(private _store: Store<fromOrder.OrderState>, private orderService: OrderService) { 
-    // super(_store);
+  constructor(private _store: Store<fromOrder.OrderState>, private orderService: OrderService) {
     super(); 
   }
 
   ngOnInit() {
-    // this.setTableConfiguration();
-    // this.fetchPendingOrders();
-    // this.subscribeToOrder(fromOrder.getToDeliver, this.store);
   }
 
   fetchPendingOrders() {
-    // this.orderService.getOrdersToDeliver()
-    //   .pipe(this.closeOnDestroy$(),
-    //     map((res: OrderResponse) => res.data)
-    //   ).subscribe((orders: Order[]) => {
-    //     this.store.dispatch(new SetOrdersToDeliverAction(orders));
-    //   });
   }
 
 }

@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { OrderRoute } from '../OrderRoute';
-import { OrderRow } from '../order-row';
 import { fromOrderAction, fromOrderReducer, fromOrderSelectors } from '../store';
 import { Observable } from 'rxjs';
 
@@ -21,31 +20,23 @@ import { Observable } from 'rxjs';
 export class PendingComponent extends OrderTableAbstract implements OnInit {
 
   private orders$: Observable<Order[]>;
-  onSelectedOrder(row: OrderRow): void {
-    this._store.dispatch(fromOrderAction.selectOrder({ order: row }));
-    // this.router.navigate([`${OrderRoute.ORDERS}/${OrderRoute.DETAIL}`]);
+  onSelectedOrder(row: Order): void {
+    this.store.dispatch(fromOrderAction.selectOrder({ order: row }));
   }
 
-  constructor(private _store: Store<fromOrderReducer.OrderState>,
+  constructor(private store: Store<fromOrderReducer.OrderState>,
               private router: Router) {
-    // super(_store);
     super();
   }
 
   ngOnInit() {
     this.setTableConfiguration();
     this.fetchPendingOrders();
-    this.orders$ = this._store.select(fromOrderSelectors.getPending).pipe(tap(console.log));
-    // this.subscribeToOrder(fromOrderSelectors.getPending);
+    this.orders$ = this.store.select(fromOrderSelectors.getPending);
+    
   }
 
   fetchPendingOrders() {
-    this._store.dispatch(fromOrderAction.pendingOrders());
-    // this.ordersService.getPendingOrder()
-    //   .pipe(this.closeOnDestroy$(),
-    //     map((res: OrderResponse) => res.data)
-    //   ).subscribe((orders: Order[]) => {
-    //     this.store.dispatch(new SetPendingOrdersAction(orders));
-    //   });
+    this.store.dispatch(fromOrderAction.pendingOrders());
   }
 }

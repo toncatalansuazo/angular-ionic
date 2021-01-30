@@ -2,26 +2,26 @@
   <div title-template-header>Detalle order</div>
 </app-header-template>
 <ion-content>
-  <ion-list class="order__list">
+  <ion-list *ngIf="(order$ | async) as order; else noOrderInformation;"  class="order__list">
     <ion-item-divider color="primary">
-      <ion-label>Orden</ion-label>
+      <ion-label>Pedido {{ order.id }}</ion-label>
     </ion-item-divider>
-    <ion-item>
-      <ion-label class="ion-text-wrap">Id</ion-label>
-      <ion-note slot="end">
-        {{ order.id }}
-      </ion-note>
-    </ion-item>
     <ion-item>
       <ion-label class="ion-text-wrap">Fecha creacion</ion-label>
       <ion-note slot="end">
-        {{ order.fecha }}
+        {{ order.created_at }}
       </ion-note>
     </ion-item>
     <ion-item>
-      <ion-label class="ion-text-wrap">Total Pagado</ion-label>
+      <ion-label class="ion-text-wrap">Total Productos Pagado </ion-label>
       <ion-note slot="end">
-        {{ order.total }}
+        {{ order.total | currency }}
+      </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap">Total Envio Pagado </ion-label>
+      <ion-note slot="end">
+        {{ order.delivery_cost | currency }}
       </ion-note>
     </ion-item>
     <ion-item-group>
@@ -53,62 +53,71 @@
         <ion-label>Informacion Despacho</ion-label>
       </ion-item-divider>
     </ion-item-group>
-    <div *ngIf="(payment$| async)">
-      <ion-item>
-        <ion-label class="ion-text-wrap">Ciudad</ion-label>
-        <ion-note slot="end">
-          {{ (payment$| async).city }}
-        </ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label class="ion-text-wrap">Direccion</ion-label>
-        <ion-note slot="end">
-          {{ (payment$| async).comuna }} {{ (payment$| async).direction }}
-        </ion-note>
-      </ion-item>
+    <div *ngIf="(payment$| async) as payment; else paymentNotFound">
+      <div *ngIf="payment.delivery_type === 'home'">
+        <ion-item>
+          <ion-label class="ion-text-wrap">Ciudad</ion-label>
+          <ion-note slot="end">
+            {{ payment.city }}
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label class="ion-text-wrap">Direccion</ion-label>
+          <ion-note slot="end">
+            {{ payment.comuna }} {{ payment.direction }}
+          </ion-note>
+        </ion-item>
+      </div>
+      <ng-template #inStore>
+        Retiro en local.
+      </ng-template>
       <ion-item>
         <ion-label class="ion-text-wrap">Nombre Cliente</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).name }} {{ (payment$| async).lastName }}
+          {{ payment.name }} {{ payment.lastName }}
         </ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="ion-text-wrap">Rut/Identificacion</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).documentId }}
+          {{ payment.documentId }}
         </ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="ion-text-wrap">Celular</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).phone }}
+          {{ payment.phone }}
         </ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="ion-text-wrap">Email</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).email }}
+          {{ payment.email }}
         </ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="ion-text-wrap">Numero Envio</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).deliveryId || 'No ingresado'}}
+          {{ payment.deliveryId || 'No ingresado'}}
         </ion-note>
       </ion-item>
       <ion-item>
         <ion-label class="ion-text-wrap">Nombre Transporte</ion-label>
         <ion-note slot="end">
-          {{ (payment$| async).deliveryName || 'No ingresado'}}
+          {{ payment.deliveryName || 'No ingresado'}}
         </ion-note>
       </ion-item>
     </div>
+    <ng-template #paymentNotFound>
+      <p>No se encuentran pagos realizados.</p>
+    </ng-template>
     <ion-item-group>
       <ion-item-divider color="primary">
         <ion-label>Informacion Envio</ion-label>
       </ion-item-divider>
     </ion-item-group>
     <div padding *ngIf="order.delivered === 0; else prepared">
+      <p>Orden no enviada al cliente</p>
       <ion-button size="large" 
         type="button"
         (click)="onPrepared()"

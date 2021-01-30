@@ -40,7 +40,7 @@ import { EffectsModule } from '@ngrx/effects';
         component: ToDeliverComponent
       },
       {
-        path: OrderRoute.DETAIL,
+        path: `${OrderRoute.DETAIL}/:id`,
         component: DetailOrderComponent
       }
     ]),

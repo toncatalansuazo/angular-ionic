@@ -9,12 +9,11 @@
         headerHeight="50"
         footerHeight="50"
         [reorderable]="reorderable"
-        [columnMode]="flex"
+        [columnMode]="force"
         (activate)="onActivate($event)"
         [scrollbarH]="true"
-        [scrollbarV]="true"
+        [scrollbarV]="false"
         rowHeight="auto"
-        [limit]="100"
         [trackByProp]="id"
       ></ngx-datatable>
 </ion-content>

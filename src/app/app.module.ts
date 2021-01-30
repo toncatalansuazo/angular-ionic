@@ -31,7 +31,6 @@ import { fromAuthEffects } from './core/store';
       runtimeChecks: {
         strictStateSerializability: true,
         // Verifies if the actions are serializable. Please note, you may not need to set it to `true` unless you are storing/replaying actions using external resources, for example `localStorage`.
-
         strictActionSerializability: true,
         /**
          * Verifies that the state isn't mutated
