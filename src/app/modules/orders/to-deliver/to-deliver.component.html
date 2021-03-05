@@ -1,0 +1,34 @@
+<app-header-template>
+  <div title-template-header>Orderenes Por Enviar</div>
+</app-header-template>
+<ion-content>
+  <ion-searchbar 
+      inputmode="search"
+      (ionInput)="onFilterList($event)"
+      placeholder="Ingrese numero orden"
+      showCancelButton="always">
+  </ion-searchbar>
+  <ngx-datatable
+    class="material"
+    [rows]="currentOrdersInList$| async "
+    [columns]="columns"
+    headerHeight="50"
+    footerHeight="50"
+    [reorderable]="reorderable"
+    [columnMode]="force"
+    (activate)="onActivate($event)"
+    [scrollbarH]="true"
+    [scrollbarV]="false"
+    rowHeight="auto"
+    [trackByProp]="id"
+  ></ngx-datatable>
+  <ion-fab *ngIf="(lastOrderSelected$| async) as lastSelected"
+    (click)="onSelectedOrder(lastSelected)"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="arrow-redo-outline"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,21 @@
+.header {
+  &__icon {
+    float: right;
+  }
+}
+.container {
+  &__delivery {
+    &-form {
+      width: 100%;
+    }
+    &-transport-id {
+      width: 100%;
+      border-bottom: #4444 2px solid;
+    }
+    &-transport-name {
+      width: 100%;
+      max-width: 100%;
+      border-bottom: #4444 2px solid;
+    }
+  }
+}

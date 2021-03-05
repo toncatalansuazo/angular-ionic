@@ -1,17 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header-template>
+  <div title-template-header>Home</div>
+</app-header-template>
 <ion-content>
-  
-  <ion-list>
-    
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let alert of alerts$ | async; let i = index">
+        <app-alert class="alert__width-50" [alert]="alert"></app-alert>
+      </ion-col>
+    </ion-row >
+  </ion-grid>
 </ion-content>
-

@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header >
+  <ion-toolbar class="ion-header-color">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,6 +7,7 @@
       <ng-content select="[title-template-header]"></ng-content>
     </ion-title>
   </ion-toolbar>
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate"></ion-progress-bar>
 </ion-header>
 
 

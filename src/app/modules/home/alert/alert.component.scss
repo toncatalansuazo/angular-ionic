@@ -1,0 +1,11 @@
+.alert {
+  cursor: pointer;
+  height: 200px!important;
+  &__header {
+    height: 70%!important;
+  }
+}
+ion-chip {
+  background-color: #e8393933;
+  color: white;
+}

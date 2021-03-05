@@ -1,23 +1,43 @@
 <ion-content>
-  <form [formGroup]="loginForm">
-    <ion-list lines="full" class="ion-margin">
-      <ion-item>
-        <ion-label position="fixed">email</ion-label>
-        <ion-input [formControl]="emailFC" type="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">password</ion-label>
-        <ion-input [formControl]="passwordFC" type="password" placeholder="Enter Input"></ion-input>
-      </ion-item>
-      <div>
-        <ion-spinner *ngIf="loading$ | async" name="bubbles"></ion-spinner>
-      </div>
-      <br>
-      <ion-button class="form__btn-lgn" [disabled]="loginForm.invalid" (click)="onLogin()">
-        Login
-      </ion-button>
-    </ion-list>
-  </form>
+  <section class="wave">
+
+  </section>
+  <img class="logo" src="assets/img/logo.png" />
+  
+  <section class="form">
+    <form class="form__login" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <ion-list lines="full" class="ion-margin">
+        <ion-item>
+          <ion-icon class="form__icon" name="mail-outline"></ion-icon>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <div class="form__error" 
+          *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+          Verifica el email.
+        </div>
+        <ion-item>
+          <ion-icon class="form__icon" name="key-outline"></ion-icon>
+          <ion-input formControlName="password" [type]="passwordType" placeholder="Enter Input"></ion-input>
+          <ion-icon class="form__icon-eye" name="eye-outline" (click)="showPassword()"></ion-icon>
+        </ion-item>
+        <div class="form__error" 
+          *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+          La contrasena debe tener al menos 3 caracteres.
+        </div>
+        <div class="form__login ion-text-center">
+          <ion-spinner *ngIf="loading$ | async" name="bubbles"></ion-spinner>
+        </div>
+        <div class="form__error">
+          {{ error$ | async }}
+        </div>
+        <ion-button class="form__submit" type="submit" expand="full"
+         [disabled]="(loginForm.invalid && !loginForm.touched) || (loading$ | async)">
+          Login
+        </ion-button>
+      </ion-list>
+    </form> 
+  </section>
+  
 </ion-content>
 
 

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { User } from 'src/app/modules/login/User';
-import * as _ from 'lodash';
 import { ConfigurationEndpoint } from '../../../configuration/configuration-endpoint';
+import { Data } from '@angular/router';
 
 export interface AuthResponse {
-  token: string;
+  access_token: string;
+  expires_at: Data;
 }
 
 export const AUTH_TOKEN = 'ECOMMERCE_TOKEN';
@@ -16,6 +17,7 @@ export const AUTH_TOKEN = 'ECOMMERCE_TOKEN';
 })
 export class AuthService {
   token: string;
+  expiresAt: Data;
 
   constructor(private htpp: HttpClient) { }
 
@@ -38,7 +40,7 @@ export class AuthService {
 
   private isTokenValid(): boolean {
     // @TODO check expiration
-    return _.isNil(this.token) ? false : true;
+    return this.token ? false : true;
   }
 
   logout() {

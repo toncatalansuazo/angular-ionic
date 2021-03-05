@@ -6,12 +6,20 @@ const routes: Routes = [
   {path: '', canActivate: [AuthGuard], pathMatch: 'prefix', children: [
     {
       path: '',
-      redirectTo: 'login',
+      redirectTo: '/login',
       pathMatch: 'full'
     },
     {
       path: 'home',
       loadChildren: () => import('./modules/home/home.module').then(m => m.HomePageModule)
+    },
+    {
+      path: 'orders',
+      loadChildren: () => import('./modules/orders/orders.module').then(m => m.OrdersModule)
+    },
+    {
+      path: 'products',
+      loadChildren: () => import('./modules/product/product.module').then(m => m.ProductModule)
     }
   ]},
   {

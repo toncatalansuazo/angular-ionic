@@ -1,4 +1,38 @@
-.form__btn-lgn {
+.wave {
+    height: 25%;
     width: 100%;
-    height: 20px;
+    background: linear-gradient(346deg, #f59c53e3, #985e2f);
+    position: relative;
+    color: white;
+}
+.wave::before {
+    width: 100%;
+    height: 46%;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    content: '';
+    
+    background: url('../../../assets/img/wave.png');
+    background-size: cover;
+}
+.logo {
+    position: absolute;
+    top: 0;
+    width: 30%;
+    margin: 6% 35% 0% 35%;
+}
+.form {
+    &__submit {
+        background-color: #dc965c;
+    }
+    &__error {
+        color: red;
+    }
+    &__login {
+        margin: 10%;
+    }
+    &__icon {
+       margin-right: 5%; 
+    }
 }

@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, AuthResponse, AUTH_TOKEN } from 'src/app/core/authentication/auth/auth.service';
 import { User } from './User';
-import { tap, catchError } from 'rxjs/operators';
 import { Destroyer } from 'src/app/utils/Destroyer';
-import { throwError, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../app.reducer' ;
-import { StartLoadingAction, StopLoadingAction } from 'src/app/shared/ui.actions';
-import * as Auth from 'src/app/core/auth.action';
+import * as fromRoot from '../../app.reducer';
+import { fromUiActions, fromUiSelectors } from '../../shared/store';
+import { fromAuthAction, fromAuthReducer } from '../../core/store';
 
 @Component({
   selector: 'app-login',
@@ -19,48 +16,37 @@ import * as Auth from 'src/app/core/auth.action';
 export class LoginComponent extends Destroyer implements OnInit {
   loading$: Observable<boolean>;
   loginForm: FormGroup;
-  emailFC: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.min(3)
-  ]);
-  passwordFC: FormControl = new FormControl('', [
-    Validators.required, Validators.min(3)
-  ]);
+  error$: Observable<string>;
+  passwordType = 'password';
 
-  constructor(private auth: AuthService, private router: Router, private store: Store<fromRoot.State>) {
+  constructor(private store: Store<fromRoot.State>,
+    private formBuilder: FormBuilder) {
     super();
   }
 
   ngOnInit() {
-    this.loading$ = this.store.select(fromRoot.getIsLoading);
-    this.loginForm = new FormGroup({
-      email: this.emailFC,
-      password: this.passwordFC
+    this.loginForm = this.formBuilder.group({
+      email: ['', [
+        Validators.required,
+        Validators.min(3),
+        Validators.email
+      ]], password: ['' , [
+        Validators.required,
+        Validators.min(3),
+        // TODO min 1 number and one special character 
+      ]]
     });
+    this.loading$ = this.store.select(fromUiSelectors.getIsLoadingProgressBar);
+    this.error$ = this.store.select(fromAuthReducer.getLoginError);
   }
 
   onLogin(): void {
     const user: User = this.loginForm.value;
-    this.store.dispatch(new StartLoadingAction());
-    this.auth.login(user)
-      .pipe(
-        this.closeOnDestroy$(),
-        tap((authResponse: AuthResponse) => {
-          if (authResponse) {
-            this.auth.token = authResponse.token;
-            this.store.dispatch(new Auth.Authenticated());
-            localStorage.setItem(AUTH_TOKEN, 'Bearer ' + authResponse.token);
-            this.router.navigate(['/home']);
-          }
-        }),
-        catchError((err: any) => {
-          this.store.dispatch(new Auth.Unauthenticated());
-          this.store.dispatch(new StopLoadingAction());
-          return throwError('Error in call' + JSON.stringify(err.status));
-        })
-      ).subscribe(() => {
-        this.store.dispatch(new StopLoadingAction());
-      });
+    this.store.dispatch(fromUiActions.startLoadingModal({message: 'Cargando...'}));
+    this.store.dispatch(fromAuthAction.login(this.loginForm.value));
   }
 
+  showPassword() {
+    this.passwordType = (this.passwordType === 'password') ? 'text' : 'password';
+  }
 }
