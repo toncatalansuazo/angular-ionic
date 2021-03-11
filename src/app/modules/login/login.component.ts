@@ -43,7 +43,7 @@ export class LoginComponent extends Destroyer implements OnInit {
   onLogin(): void {
     const user: User = this.loginForm.value;
     this.store.dispatch(fromUiActions.startLoadingModal({message: 'Cargando...'}));
-    this.store.dispatch(fromAuthAction.login(this.loginForm.value));
+    this.store.dispatch(fromAuthAction.login({ user }));
   }
 
   showPassword() {

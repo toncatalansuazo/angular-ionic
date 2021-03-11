@@ -14,8 +14,9 @@ export interface Order {
   updated_at: string;
 }
 
-export class DeliveryInfo {
-  constructor(public deliveryName: string, public deliveryId: number) {  }
+export interface DeliveryInfo {
+  deliveryName: string;
+  deliveryId: string;
 }
 
 export interface DeliveryInfoResponse {

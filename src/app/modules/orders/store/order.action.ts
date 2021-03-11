@@ -3,6 +3,7 @@ import { Product } from 'src/app/core/http/product/product.model';
 import { Action, createAction, props } from '@ngrx/store';
 import { Payment } from 'src/app/core/http/payment/payment.model';
 import { OrderRoute } from '../OrderRoute';
+import { DeliveryInfo } from 'src/app/core/http/order/order.model';
 export const SET_ORDERS_COMPLETED_ACTION = '[ORDERS] set orders completed';
 export const SET_PENDING_ORDERS_ACTION = '[ORDERS] set pending orders';
 export const SET_ORDERS_TO_DELIVER_ACTION = '[ORDERS] set orders to deliver';
@@ -32,7 +33,14 @@ enum OrderActionsType {
 
     SER_ORDER_AS_PREPARED = '[ORDER] SET AS PREPARED',
     SET_ORDER_AS_PREPARED_SUCCESS = '[ORDER] SET AS PREPARED SUCCESS',
-    SET_ORDER_AS_PREPARED_FAIL = '[ORDER] SET AS PREPARED FAIL'
+    SET_ORDER_AS_PREPARED_FAIL = '[ORDER] SET AS PREPARED FAIL',
+
+    UPDATE_PENDING_ORDER = "[ORDER] UPDATE PENDING ORDER",
+    UPDATE_TO_DELIVER_ORDER = "[ORDER] UPDATE TO DELIVER ORDER",
+    SET_DELIVER_INFO_TO_PENDING_ORDER = "[ORDER] SET DELIVER INFO",
+    SET_DELIVER_INFO_TO_TO_DELIVER_ORDER = "[ORDER] SET DELIVER INFO TO TO DELIVER ORDER",
+    SET_DELIVER_INFO_TO_TO_DELIVER_ORDER_SUCCESS = "[ORDER] SET DELIVER INFO TO TO DELIVER ORDER SUCCESS",
+    SET_DELIVER_INFO_TO_PENDING_ORDER_SUCCESS = "[ORDER] SET DELIVER INFO TO PENDING ORDER SUCCESS"
 }
 
 export const pendingOrders = createAction(
@@ -113,3 +121,30 @@ export const setOrderAsPreparedSuccess = createAction(
 export const setOrderAsPreparedFail = createAction(
     OrderActionsType.SET_ORDER_AS_PREPARED_FAIL
 );
+export const updateCompletedOrder = createAction(
+    OrderActionsType.UPDATE_PENDING_ORDER,
+    props<{ order: Order }>()
+);
+export const update = createAction(
+    OrderActionsType.UPDATE_TO_DELIVER_ORDER,
+    props<{ order: Order }>()
+);
+export const setDeliveryInfoToPendingOrder = createAction(
+    OrderActionsType.SET_DELIVER_INFO_TO_PENDING_ORDER,
+    props<{ deliveryInfo: DeliveryInfo }>()
+);
+export const setDeliveryInfoToPendingOrderSuccess = createAction(
+    OrderActionsType.SET_DELIVER_INFO_TO_PENDING_ORDER_SUCCESS,
+    props<{ order: Order, deliveryInfo: DeliveryInfo }>()
+);
+export const setDeliveryInfoToToDeliverOrder = createAction(
+    OrderActionsType.SET_DELIVER_INFO_TO_TO_DELIVER_ORDER,
+    props<{ deliveryInfo: DeliveryInfo }>()
+);
+export const setDeliveryInfoToToDeliverOrderSuccess = createAction(
+    OrderActionsType.SET_DELIVER_INFO_TO_TO_DELIVER_ORDER_SUCCESS,
+    props<{ order: Order, deliveryInfo: DeliveryInfo }>()
+);
+// update state completed order
+// update state pending order
+// update state to deliver order

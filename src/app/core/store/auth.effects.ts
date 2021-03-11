@@ -13,13 +13,13 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromAuthAction.login),
-      mergeMap(({ email, password }) =>
-        this.authService.login({ email, password }).pipe(
+      mergeMap(({ user }) =>
+        this.authService.login(user).pipe(
           map((res: AuthResponse) => {
             this.authService.token = res.access_token;
             localStorage.setItem(AUTH_TOKEN, res.access_token);
             this.store.dispatch(fromUiActions.stopLoadingModal());
-            return fromAuthAction.loginSuccess({ email });
+            return fromAuthAction.loginSuccess({ email: user.email });
           }),
           catchError(({ error }) => {
               return of(fromAuthAction.loginFailed({ error: error && error.error.message }));

@@ -65,9 +65,30 @@ export const orderReducer = createReducer(initialState,
     };
   }),
   on(fromOrderAction.setOrderAsPreparedSuccess, (state: OrderState, { order }) => {
+    const pendingOrders = [...state.pending];
+    const index = pendingOrders.findIndex(pendingOrder => pendingOrder.id === order.id);
+    pendingOrders[index] = order;
     return {
       ...state,
-      selected: order
+      selected: order,
+      pending: pendingOrders
+    };
+  }),
+  on(fromOrderAction.setDeliveryInfoToToDeliverOrderSuccess, (state: OrderState, { order, deliveryInfo }) => {
+    const paymentsInOrder = {...state.paymentInOrder};
+    paymentsInOrder[order.id] = { ...paymentsInOrder[order.id], ...deliveryInfo };
+    return {
+      ...state,
+      paymentInOrder: paymentsInOrder
+    };
+  }),
+  on(fromOrderAction.setDeliveryInfoToPendingOrderSuccess, (state: OrderState, { order, deliveryInfo }) => {
+    console.log('setDeliveryInfoToPendingOrderSuccess');
+    const paymentsInOrder = {...state.paymentInOrder}
+    paymentsInOrder[order.id] = { ...paymentsInOrder[order.id], ...deliveryInfo };
+    return {
+      ...state,
+      paymentInOrder: paymentsInOrder
     };
   })
 );

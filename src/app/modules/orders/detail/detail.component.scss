@@ -18,4 +18,28 @@
       border-bottom: #4444 2px solid;
     }
   }
+  ion-label, ion-note {
+    font-size: 15px;
+    color: #000;
+  }
+  .item-native {
+    background-color: transparent;
+  }
+  ion-col {
+    ion-item {
+      .item-native {
+        background-color: transparent;
+      }
+    }
+  }
+  &__product {
+    &-eye {
+      position: absolute;
+      top: 0px;
+    }
+    &-quantity {
+      font-size: 15px;
+      color: #000;
+    }
+  }
 }

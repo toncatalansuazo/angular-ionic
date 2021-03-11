@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { PivotPipe } from './pipes/pivot.pipe';
 import { ProductModalComponent } from './modal/product-modal/product-modal.component';
 import { CommonModule } from '@angular/common';
+import { DragDropDirective } from './decorators/drag-drop.directive';
+import { ProductReadyDirective } from './decorators/product-ready/product-ready.directive';
 
 @NgModule({
   imports: [
@@ -16,13 +18,16 @@ import { CommonModule } from '@angular/common';
     ItemComponent,
     PivotPipe,
     ProductModalComponent,
-    CommonModule
+    CommonModule,
+    ProductReadyDirective
   ],
   declarations: [
     HeaderTemplateComponent,
     ItemComponent,
     PivotPipe,
-    ProductModalComponent
+    ProductModalComponent,
+    DragDropDirective,
+    ProductReadyDirective
   ],
   providers: []
 })

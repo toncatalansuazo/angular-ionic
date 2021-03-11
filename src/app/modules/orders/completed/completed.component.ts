@@ -31,7 +31,7 @@ export class CompletedOrdersComponent extends OrderTableAbstract implements OnIn
   }
 
   onSelectedOrder(order: Order) {
-    this.store.dispatch(fromOrderAction.selectOrder({ order, fromRoute: OrderRoute.COMPLETE }));
+    this.store.dispatch(fromOrderAction.selectOrder({ order, fromRoute: OrderRoute.COMPLETED }));
   }
 
   private fetchOrdersCompleted(): void {

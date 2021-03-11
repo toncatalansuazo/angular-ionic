@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { merge, Observable, of } from 'rxjs';
-import { catchError, exhaustMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { OrderService } from 'src/app/core/http/order/order.service';
 import * as fromOrderSelectors from './order.selectors';
 import { Order, OrdersResponse, OrderResponse } from '../order.model';
@@ -14,6 +14,7 @@ import { ProductResponse } from 'src/app/core/http/product/product.model';
 import { PaymentService } from 'src/app/core/http/payment/payment.service';
 import { PaymentResponse } from 'src/app/core/http/payment/payment.model';
 import { fromUiActions } from 'src/app/shared/store';
+import { DeliveryInfoResponse } from 'src/app/core/http/order/order.model';
 
 @Injectable()
 export class OrderEffects {
@@ -58,7 +59,7 @@ export class OrderEffects {
 
   selectOrder$ = createEffect(() => this.actions$.pipe(
     ofType(fromOrderAction.selectOrder),
-    tap(({ order, fromRoute }) => this.router.navigate([`${OrderRoute.ORDERS}/${OrderRoute.DETAIL}/${order.id}`], { queryParams: {back: `${OrderRoute.ORDERS}${fromRoute}` } }))
+    tap(({ order, fromRoute }) => this.router.navigate([`${OrderRoute.ORDERS}/${OrderRoute.DETAIL}/${order.id}`], { queryParams: {fromRoute: `${OrderRoute.ORDERS}${fromRoute}` } }))
   ), { dispatch: false });
 
   getProductsInOrder$ = createEffect(() => this.actions$.pipe(
@@ -108,6 +109,28 @@ export class OrderEffects {
     mergeMap(() => this.selectedOrder),
     exhaustMap((order: Order) => this.orderService.setOrderAsPrepared(order).pipe(
       map((res: OrderResponse) => fromOrderAction.setOrderAsPreparedSuccess({ order: res.data })),
+      catchError((err) => of(err))
+    ))
+  ));
+  
+  setDeliveryInfoToPendingOrder$ = createEffect(() => this.actions$.pipe(
+    ofType(fromOrderAction.setDeliveryInfoToPendingOrder),
+    withLatestFrom(this.selectedOrder),
+    exhaustMap(([params, order]) => this.orderService.setDeliveryInfo(order.id, params.deliveryInfo).pipe(
+      tap(() => console.log('setDeliveryInfoToPendingOrder')),
+      map((res: DeliveryInfoResponse) =>
+        fromOrderAction.setDeliveryInfoToPendingOrderSuccess({order, deliveryInfo: params.deliveryInfo})),
+      catchError((err) => of(err))
+    ))
+  ));
+
+  setDeliveryInfoToOrderToDeliver$ = createEffect(() => this.actions$.pipe(
+    ofType(fromOrderAction.setDeliveryInfoToToDeliverOrder),
+    withLatestFrom(this.selectedOrder),
+    exhaustMap(([params, order]) => this.orderService.setDeliveryInfo(order.id, params.deliveryInfo).pipe(
+      tap(() => console.log('setDeliveryInfoToOrderToDeliver')),
+      map((res: DeliveryInfoResponse) =>
+        fromOrderAction.setDeliveryInfoToToDeliverOrderSuccess({order, deliveryInfo: params.deliveryInfo})),
       catchError((err) => of(err))
     ))
   ));

@@ -27,7 +27,7 @@ import { EffectsModule } from '@ngrx/effects';
     NgxDatatableModule,
     RouterModule.forChild([
       {
-        path: OrderRoute.COMPLETE,
+        path: OrderRoute.COMPLETED,
         component: CompletedOrdersComponent
       },
       {

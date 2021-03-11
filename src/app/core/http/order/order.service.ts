@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigurationEndpoint } from 'src/app/configuration/configuration-endpoint';
 import { Observable } from 'rxjs';
-import { OrdersResponse, Order, DeliveryInfo, OrderResponse } from 'src/app/modules/orders/order.model';
+import { OrdersResponse, Order, OrderResponse } from 'src/app/modules/orders/order.model';
 import { ProductResponse } from '../product/product.model';
-import { DeliveryInfoResponse } from './order.model';
+import { DeliveryInfo, DeliveryInfoResponse } from './order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class OrderService {
     return this.http.get<OrdersResponse>(`${this.url}/prepared`);
   }
 
-  setDeliveryInfo(orderId: string, deliveryInfo: DeliveryInfo): Observable<DeliveryInfoResponse> {
+  setDeliveryInfo(orderId: number, deliveryInfo: DeliveryInfo): Observable<DeliveryInfoResponse> {
     return this.http.put<DeliveryInfoResponse>(`${this.urlDelivery}/order/${orderId}`, deliveryInfo);
   }
 

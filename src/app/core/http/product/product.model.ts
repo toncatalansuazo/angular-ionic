@@ -23,6 +23,7 @@ export class Product {
     visibility?: boolean;
     pivot?: Pivot;
     status?: Pivot;
+    highlighted: boolean = false;
 }
 
 export interface Pivot {
