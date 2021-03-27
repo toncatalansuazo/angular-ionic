@@ -6,7 +6,7 @@ export const featureKey = 'ui';
 export interface State {
   isLoadingProgressBar: boolean;
   isLoadingModal: boolean;
-  error: string;
+  error: string| undefined;
   // productModal: Product;
 }
 

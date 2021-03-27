@@ -36,7 +36,10 @@ export class OrderService {
     return this.http.get<OrdersResponse>(`${this.url}/to-deliver`);
   }
 
-  getProductsInOrder(id: number): Observable<ProductResponse> {
+  getProductsInOrder(id: number| undefined): Observable<ProductResponse> {
+    if (!id) {
+      throw new Error(`order id is not defined`);
+    }
     return this.http.get<ProductResponse>(`${this.orderUrl}/products/${id}`);
   }
 
@@ -44,11 +47,11 @@ export class OrderService {
     return this.http.get<OrdersResponse>(`${this.url}/prepared`);
   }
 
-  setDeliveryInfo(orderId: number, deliveryInfo: DeliveryInfo): Observable<DeliveryInfoResponse> {
+  setDeliveryInfo(orderId: number| undefined, deliveryInfo: DeliveryInfo): Observable<DeliveryInfoResponse> {
     return this.http.put<DeliveryInfoResponse>(`${this.urlDelivery}/order/${orderId}`, deliveryInfo);
   }
 
-  setOrderAsPrepared(order): Observable<OrderResponse> {
+  setOrderAsPrepared(order: Order| undefined): Observable<OrderResponse> {
     return this.http.put<OrderResponse>(`${this.orderUrl}`, {order});
   }
 }

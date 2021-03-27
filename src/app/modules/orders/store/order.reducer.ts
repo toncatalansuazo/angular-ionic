@@ -9,13 +9,13 @@ import * as fromOrderAction  from "./order.action";
 export const featureKey = 'orders';
 
 export interface OrderState {
-    completed: Order[];
+    completed: Order[]| undefined;
     pending: Order[];
     toDeliver: Order[];
     productsInOrder: { [key: number]: Product[] };
     paymentInOrder: { [key: number]: Payment };
     // current order selected
-    selected: Order;
+    selected: Order| undefined;
 }
 
 export const initialState: OrderState = {
@@ -37,7 +37,10 @@ export const orderReducer = createReducer(initialState,
     selected: order
   })),
   on(fromOrderAction.getProductsSuccess, (state: OrderState, { orderId, products}) => {
-    let orderProductsToAdd = {};
+    if (!orderId) {
+      throw new Error("Unexpected error: Missing orderId");
+    }
+    let orderProductsToAdd: {[key: number]: Product[]} = {};
     orderProductsToAdd[orderId] = products;
     return {
       ...state,
@@ -45,7 +48,9 @@ export const orderReducer = createReducer(initialState,
     };
   }),
   on(fromOrderAction.getPaymentSuccess, (state: OrderState, { orderId, payment}) => {
-    let orderPaymentToAdd = {};
+    if (!orderId)
+      throw new Error(`order id not found`);
+    let orderPaymentToAdd: {[key: number]: Payment} = {};
     orderPaymentToAdd[orderId] = payment;
     return {
       ...state,
@@ -75,6 +80,8 @@ export const orderReducer = createReducer(initialState,
     };
   }),
   on(fromOrderAction.setDeliveryInfoToToDeliverOrderSuccess, (state: OrderState, { order, deliveryInfo }) => {
+    if (!(order && order.id))
+      throw new Error(`order id not found`);
     const paymentsInOrder = {...state.paymentInOrder};
     paymentsInOrder[order.id] = { ...paymentsInOrder[order.id], ...deliveryInfo };
     return {
@@ -84,6 +91,8 @@ export const orderReducer = createReducer(initialState,
   }),
   on(fromOrderAction.setDeliveryInfoToPendingOrderSuccess, (state: OrderState, { order, deliveryInfo }) => {
     console.log('setDeliveryInfoToPendingOrderSuccess');
+    if (!(order && order.id))
+      throw new Error(`order id not found`);
     const paymentsInOrder = {...state.paymentInOrder}
     paymentsInOrder[order.id] = { ...paymentsInOrder[order.id], ...deliveryInfo };
     return {

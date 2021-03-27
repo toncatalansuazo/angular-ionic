@@ -16,7 +16,7 @@ export class AlertService {
     constructor(private http: HttpClient) {}
 
     getAlerts(): Observable<Alert[]> {
-        return this.http.get(this.url).pipe(
+        return this.http.get<AlertResponse>(this.url).pipe(
             map((json: AlertResponse) => this.toAlerts(json))
         );
     }
@@ -58,7 +58,8 @@ export class AlertService {
         new Alert(4, 'Post Publicados', 'Post en blog', 0, 'dark', ''),
       ];
       return alerts.map(alert => {
-        const quantity = json.data.find(al => al.id === alert.id).quantity;
+        const tmp: any = json && json.data && json.data.find(al => al.id === alert.id);
+        const quantity = tmp && tmp.quantity;
         alert.quantity = quantity;
         return alert;
       });

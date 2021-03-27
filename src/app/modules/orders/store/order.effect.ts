@@ -18,7 +18,7 @@ import { DeliveryInfoResponse } from 'src/app/core/http/order/order.model';
 
 @Injectable()
 export class OrderEffects {
-  private selectedOrder: Observable<Order> = this.store.select(fromOrderSelectors.getSelectedOrder);
+  private selectedOrder: Observable<Order| undefined> = this.store.select(fromOrderSelectors.getSelectedOrder);
 
   getOrders$ = createEffect(() => this.actions$.pipe(
       ofType(fromOrderAction.pendingOrders),
@@ -70,8 +70,8 @@ export class OrderEffects {
   getProductsInOrder$ = createEffect(() => this.actions$.pipe(
     ofType(fromOrderAction.getProducts),
     mergeMap(() => this.selectedOrder),
-    exhaustMap((order: Order) => this.orderService.getProductsInOrder(order.id).pipe(
-      map((res: ProductResponse) => fromOrderAction.getProductsSuccess({ orderId: order.id, products: res.data})),
+    exhaustMap((order: Order| undefined) => this.orderService.getProductsInOrder(order && order.id).pipe(
+      map((res: ProductResponse) => fromOrderAction.getProductsSuccess({ orderId: order && order.id, products: res.data})),
       catchError((err) => of(err))
     ))
   ));
@@ -79,8 +79,8 @@ export class OrderEffects {
   getPayment$ = createEffect(()  => this.actions$.pipe(
     ofType(fromOrderAction.getPayment),
     mergeMap(() => this.selectedOrder),
-    exhaustMap((order: Order) => this.paymentService.getPayment(order.id).pipe(
-      map((res: PaymentResponse) => fromOrderAction.getPaymentSuccess({ orderId: order.id, payment: res.data})),
+    exhaustMap((order: Order| undefined) => this.paymentService.getPayment(order && order.id).pipe(
+      map((res: PaymentResponse) => fromOrderAction.getPaymentSuccess({ orderId: order && order.id, payment: res.data})),
       catchError((err) => of(err))
     ))
   ));
@@ -112,7 +112,7 @@ export class OrderEffects {
   setOrderPrepared$ = createEffect(()  => this.actions$.pipe(
     ofType(fromOrderAction.setOrderAsPrepared),
     mergeMap(() => this.selectedOrder),
-    exhaustMap((order: Order) => this.orderService.setOrderAsPrepared(order).pipe(
+    exhaustMap((order: Order| undefined) => this.orderService.setOrderAsPrepared(order).pipe(
       map((res: OrderResponse) => fromOrderAction.setOrderAsPreparedSuccess({ order: res.data })),
       catchError((err) => of(err))
     ))
@@ -121,7 +121,7 @@ export class OrderEffects {
   setDeliveryInfoToPendingOrder$ = createEffect(() => this.actions$.pipe(
     ofType(fromOrderAction.setDeliveryInfoToPendingOrder),
     withLatestFrom(this.selectedOrder),
-    exhaustMap(([params, order]) => this.orderService.setDeliveryInfo(order.id, params.deliveryInfo).pipe(
+    exhaustMap(([params, order]: [any, Order| undefined]) => this.orderService.setDeliveryInfo(order && order.id, params.deliveryInfo).pipe(
       tap(() => console.log('setDeliveryInfoToPendingOrder')),
       map((res: DeliveryInfoResponse) =>
         fromOrderAction.setDeliveryInfoToPendingOrderSuccess({order, deliveryInfo: params.deliveryInfo})),
@@ -132,7 +132,7 @@ export class OrderEffects {
   setDeliveryInfoToOrderToDeliver$ = createEffect(() => this.actions$.pipe(
     ofType(fromOrderAction.setDeliveryInfoToToDeliverOrder),
     withLatestFrom(this.selectedOrder),
-    exhaustMap(([params, order]) => this.orderService.setDeliveryInfo(order.id, params.deliveryInfo).pipe(
+    exhaustMap(([params, order]: [any, Order| undefined]) => this.orderService.setDeliveryInfo(order && order.id, params.deliveryInfo).pipe(
       tap(() => console.log('setDeliveryInfoToOrderToDeliver')),
       map((res: DeliveryInfoResponse) =>
         fromOrderAction.setDeliveryInfoToToDeliverOrderSuccess({order, deliveryInfo: params.deliveryInfo})),

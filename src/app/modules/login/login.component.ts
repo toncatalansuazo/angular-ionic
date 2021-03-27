@@ -16,7 +16,7 @@ import { fromAuthAction, fromAuthReducer } from '../../core/store';
 export class LoginComponent extends Destroyer implements OnInit {
   loading$: Observable<boolean>;
   loginForm: FormGroup;
-  error$: Observable<string>;
+  error$: Observable<string| undefined>;
   passwordType = 'password';
   constructor(private store: Store<fromRoot.State>,
     private formBuilder: FormBuilder) {

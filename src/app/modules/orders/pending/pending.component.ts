@@ -21,7 +21,7 @@ import { fromUiSelectors } from 'src/app/shared/store';
 export class PendingComponent extends OrderTableAbstract implements OnInit {
   // orders$: Observable<Order[]>;
   isLoading$: Observable<boolean>;
-  lastOrderSelected$: Observable<Order>;
+  lastOrderSelected$: Observable<Order| undefined>;
 
   constructor(private store: Store<fromOrderReducer.OrderState>,
               private router: Router) {

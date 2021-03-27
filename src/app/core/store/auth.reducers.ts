@@ -4,7 +4,7 @@ const featureKey = 'auth';
 
 export interface State {
     isAuthenticated: boolean;
-    error: string;
+    error: string| undefined;
 }
 
 const initialState: State = {
@@ -25,7 +25,7 @@ const _authReducer = createReducer(
   }))
 );
 
-export function authReducer(state, action) {
+export function authReducer(state: any, action: any) {
   return _authReducer(state, action);
 }
 

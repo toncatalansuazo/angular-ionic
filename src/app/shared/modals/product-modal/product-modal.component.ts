@@ -7,6 +7,7 @@ import { Product } from 'src/app/core/http/product/product.model';
 // import * as fromUiReducers from '../../../store/ui.reducer';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fromUiReducers, fromUiSelectors } from '../../store';
+import { ProductModalType } from 'src/app/model/ProductModalType';
 
 @Component({
   selector: 'app-product-modal',
@@ -14,17 +15,19 @@ import { fromUiReducers, fromUiSelectors } from '../../store';
   styleUrls: ['./product-modal.component.scss'],
 })
 export class ProductModalComponent implements OnInit {
-  product$: Observable<Product>;
   @Input() mode: string;
   @Input() product: Product;
   productForm: FormGroup;
+  product$: Observable<Product>;
+  showForm: boolean;
+
   constructor(public modalController: ModalController,
-              private store: Store<fromUiReducers.State>,
               private formBuilder: FormBuilder) {
     this.productForm = this.formBuilder.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
-      unit: ['', Validators.required]
+      unit: ['', Validators.required],
+      stock: ['', Validators.required]
     });
   }
 
@@ -34,8 +37,19 @@ export class ProductModalComponent implements OnInit {
     // this.product$ = this.store.select(fromUiSelectors.selectProductInModal);
   }
 
+  /**
+   * show/hide form to edit product
+   */
+  showFormProduct() {
+    this.showForm = this.mode === ProductModalType.DETAIL;
+  }
+
   onSubmit() {
+    const values: Product = this.productForm.value;
     console.log(this.productForm.value);
+    // show confirm modal
+    // send info 
+    // update in store
   }
 
   dismiss() {

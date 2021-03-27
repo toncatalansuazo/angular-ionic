@@ -13,7 +13,7 @@ export class PaymentService {
   }
   constructor(private http: HttpClient) { }
 
-  getPayment(orderId: number): Observable<PaymentResponse> {
+  getPayment(orderId: number| undefined): Observable<PaymentResponse> {
     return this.http.get<PaymentResponse>(`${this.url}/${orderId}`);
   }
 }

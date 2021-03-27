@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
           const accessToken = localStorage.getItem(AUTH_TOKEN);          
           if (accessToken) {
             // TODO change for action to get user info or save user info in local storage
-            this.store.dispatch(fromAuthAction.loginSuccess({ email: undefined}));
+            this.store.dispatch(fromAuthAction.loginSuccess({ email: 'to do'}));
             return true;
           }
           this.router.navigate(['/login']);

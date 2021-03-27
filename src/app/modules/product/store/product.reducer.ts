@@ -7,7 +7,7 @@ export const featureKey = 'products';
 
 export interface State {
   products: Product[];
-  selected: Product;
+  selected: Product| undefined;
 }
 
 const initialState: State = {

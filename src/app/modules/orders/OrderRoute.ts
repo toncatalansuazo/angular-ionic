@@ -7,7 +7,7 @@ export enum OrderRoute {
     DETAIL = 'detail'
 }
 
-export enum fromOrdersRoute {
+export enum FromOrdersRouteType {
   PENDING = OrderRoute.ORDERS + OrderRoute.PENDING,
   TO_DELIVER = OrderRoute.ORDERS + OrderRoute.TO_DELIVER,
   COMPLETED = OrderRoute.ORDERS + OrderRoute.COMPLETED,

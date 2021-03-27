@@ -12,7 +12,7 @@ import { Payment } from 'src/app/core/http/payment/payment.model';
 import { fromOrderAction, fromOrderSelectors } from '../store';
 import { fromUiActions, fromUiSelectors } from 'src/app/shared/store';
 import { ProductModalType } from 'src/app/model/ProductModalType';
-import { fromOrdersRoute } from '../OrderRoute';
+import { FromOrdersRouteType } from '../OrderRoute';
 import { DeliveryInfo } from 'src/app/core/http/order/order.model';
 import { ProductModalService } from 'src/app/shared/modals/product-modal/product-modal.service';
 
@@ -23,12 +23,12 @@ import { ProductModalService } from 'src/app/shared/modals/product-modal/product
 })
 export class DetailComponent extends Destroyer implements OnInit {
   private orderId: number;
-  order$: Observable<Order>;
+  order$: Observable<Order| undefined>;
   products$: Observable<Product[]>;
   payment$: Observable<Payment>;
   deliveryFG: FormGroup;
   isLoadingProgBar$: Observable<boolean>;
-  fromRoute: fromOrdersRoute;
+  fromRoute: FromOrdersRouteType;
   highlighted: number[]= [];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -118,12 +118,12 @@ export class DetailComponent extends Destroyer implements OnInit {
     });
   }
     
-  private comesFromPendingRoute(route): boolean {
-    return fromOrdersRoute.PENDING === route;
+  private comesFromPendingRoute(route: FromOrdersRouteType): boolean {
+    return FromOrdersRouteType.PENDING === route;
   }
   
-  private comesFromToDeliverRoute(route): boolean {
-    return fromOrdersRoute.TO_DELIVER === route;
+  private comesFromToDeliverRoute(route: FromOrdersRouteType): boolean {
+    return FromOrdersRouteType.TO_DELIVER === route;
   }
 
   private setUpDeliveryForm() {

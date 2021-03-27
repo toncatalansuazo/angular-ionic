@@ -8,27 +8,27 @@ export abstract class OrderTableAbstract extends Destroyer {
     columns: any;
     rows: Order[] = [];
     columMode: ColumnMode;
-    currentOrdersInList$: Observable<Order[]>;
-    orders$: Observable<Order[]>;
-    lastOrderSelected$: Observable<Order>;
+    currentOrdersInList$: Observable<Order[]| undefined>;
+    orders$: Observable<Order[]| undefined>;
+    lastOrderSelected$: Observable<Order| undefined>;
 
     abstract onSelectedOrder(row: Order): void;
 
-    onActivate(event) {
+    onActivate(event: {type: string, row: Order}) {
         if (event.type === 'click') {
             this.onSelectedOrder(event.row);
         }
     }
 
     // filters table list
-    onFilterList($event) {
+    onFilterList($event: any) {
         console.log($event.detail);
         const value: string = $event.srcElement.value;
         if (value.length === 0)
             this.currentOrdersInList$ = this.orders$;
         else {
             this.currentOrdersInList$ = this.orders$.pipe(
-                map((orders: Order[]) => orders.filter(order => order.id.toString().indexOf(value) !== -1)
+                map((orders: Order[]| undefined) => orders && orders.filter(order => order && order.id && order.id.toString().indexOf(value) !== -1)
                 ));   
         }
     }

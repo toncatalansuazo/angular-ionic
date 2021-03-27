@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit {
     this.isLoading$ = this.store.select(fromUiSelectors.getIsLoadingProgressBar);
   }
 
-  onFilterList($event) {
+  onFilterList($event: any) {
     const val = $event.srcElement.value.toLocaleLowerCase();
     if(val.length > 2) {
       this.currentProductsInList$ = this.products$.pipe(
@@ -61,7 +61,7 @@ export class ProductComponent implements OnInit {
     this.currentProductsInList$ = this.products$;
   }
 
-  onActivate(event) {
+  onActivate(event: {type: string, row: Product}) {
     if (event.type === 'click') {
       this.showProductModal({ product: event.row, mode: ProductModalType.DETAIL });
       // this.productModal.showProductModal({ product: event.row, mode: ProductModalType.DETAIL });

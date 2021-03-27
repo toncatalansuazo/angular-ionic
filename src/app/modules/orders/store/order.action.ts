@@ -1,6 +1,6 @@
 import { Order } from '../order.model';
 import { Product } from 'src/app/core/http/product/product.model';
-import { Action, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Payment } from 'src/app/core/http/payment/payment.model';
 import { OrderRoute } from '../OrderRoute';
 import { DeliveryInfo } from 'src/app/core/http/order/order.model';
@@ -63,7 +63,7 @@ export const getProducts = createAction(
 );
 export const getProductsSuccess = createAction(
     OrderActionsType.LOAD_PRODUCTS_SUCCESS,
-    props<{ orderId: number, products: Product[] }>()
+    props<{ orderId: number| undefined, products: Product[] }>()
 );
 export const getProductsFail = createAction(
     OrderActionsType.LOAD_PRODUCTS_FAIL,
@@ -74,7 +74,7 @@ export const getPayment = createAction(
 );
 export const getPaymentSuccess = createAction(
     OrderActionsType.LOAD_PAYMENT_SUCCESS,
-    props<{ orderId: number, payment: Payment }>()
+    props<{ orderId: number| undefined, payment: Payment }>()
 );
 export const getPaymentFail = createAction(
     OrderActionsType.LOAD_PAYMENT_FAIL
@@ -135,7 +135,7 @@ export const setDeliveryInfoToPendingOrder = createAction(
 );
 export const setDeliveryInfoToPendingOrderSuccess = createAction(
     OrderActionsType.SET_DELIVER_INFO_TO_PENDING_ORDER_SUCCESS,
-    props<{ order: Order, deliveryInfo: DeliveryInfo }>()
+    props<{ order: Order| undefined, deliveryInfo: DeliveryInfo }>()
 );
 export const setDeliveryInfoToToDeliverOrder = createAction(
     OrderActionsType.SET_DELIVER_INFO_TO_TO_DELIVER_ORDER,
@@ -143,7 +143,7 @@ export const setDeliveryInfoToToDeliverOrder = createAction(
 );
 export const setDeliveryInfoToToDeliverOrderSuccess = createAction(
     OrderActionsType.SET_DELIVER_INFO_TO_TO_DELIVER_ORDER_SUCCESS,
-    props<{ order: Order, deliveryInfo: DeliveryInfo }>()
+    props<{ order: Order| undefined, deliveryInfo: DeliveryInfo }>()
 );
 // update state completed order
 // update state pending order

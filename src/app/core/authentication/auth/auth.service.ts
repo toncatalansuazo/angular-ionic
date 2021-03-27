@@ -16,7 +16,7 @@ export const AUTH_TOKEN = 'ECOMMERCE_TOKEN';
   providedIn: 'root'
 })
 export class AuthService {
-  token: string;
+  token: string | null;
   expiresAt: Data;
 
   constructor(private htpp: HttpClient) { }
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   // check if has a token in storage
-  getTokenFromStorage(): string {
+  getTokenFromStorage(): string| null {
     return localStorage.getItem(AUTH_TOKEN);
   }
 

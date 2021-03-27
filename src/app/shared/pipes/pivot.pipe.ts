@@ -6,9 +6,13 @@ import { Pivot } from 'src/app/core/http/product/product.model';
 })
 export class PivotPipe implements PipeTransform {
 
-  transform(value: Pivot): any {
-    if (value) {
-      return (value.quantity * parseInt(value.unit.match(/\d+/)[0], 10)) + value.unit.match(/[^0-9]+/)[0];
+  transform(value: Pivot): string {
+    if (Boolean(value && value.unit && value.quantity)) {
+      const units: RegExpMatchArray | null = value.unit.match(/[^0-9]+/);
+      const unit: string = (units && units[0]) || 'unit not found/ '; 
+      const digits: RegExpMatchArray | null = value.unit.match(/\d+/);
+      const quantity: number| null = (digits && (parseInt(digits[0], 10) * value.quantity));
+      return quantity + unit;
     }
     return '';
   }
