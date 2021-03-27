@@ -7,14 +7,14 @@ export interface State {
   isLoadingProgressBar: boolean;
   isLoadingModal: boolean;
   error: string;
-  productModal: Product;
+  // productModal: Product;
 }
 
 const initialState: State = {
   isLoadingProgressBar: false,
   isLoadingModal: false,
   error: undefined,
-  productModal: undefined
+  // productModal: undefined
 };
 
 export const uiReducer = createReducer(initialState,
@@ -34,10 +34,10 @@ export const uiReducer = createReducer(initialState,
     ...state,
     isLoadingProgressBar: false
   })),
-  on(fromUiActions.showProductInModal, (state: State, { product }) => ({
-    ...state,
-    productModal: product
-  })),
+  // on(fromUiActions.showProductInModal, (state: State, { product }) => ({
+  //   ...state,
+  //   productModal: product
+  // })),
   on(fromUiActions.setError, (state: State, { error }) => ({
     ...state,
     error

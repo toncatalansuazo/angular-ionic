@@ -37,7 +37,9 @@ export class OrderEffects {
       fromOrderAction.getPayment,
       fromOrderAction.getCompleted,
       fromOrderAction.getToDeliver,
-      fromOrderAction.setOrderAsPrepared),
+      fromOrderAction.setOrderAsPrepared,
+      fromOrderAction.setDeliveryInfoToToDeliverOrder,
+      fromOrderAction.setDeliveryInfoToPendingOrder),
     map(fromUiActions.startLoadingProgressBar)
   ));
 
@@ -53,7 +55,10 @@ export class OrderEffects {
       fromOrderAction.getToDeliverSuccess,
       fromOrderAction.getToDeliverFail,
       fromOrderAction.setOrderAsPreparedSuccess,
-      fromOrderAction.setOrderAsPreparedFail),
+      fromOrderAction.setOrderAsPreparedFail,
+      fromOrderAction.setDeliveryInfoToToDeliverOrderSuccess,
+      fromOrderAction.setDeliveryInfoToPendingOrderSuccess
+      ),
     map(fromUiActions.stopLoadingProgressBar)
   ));
 

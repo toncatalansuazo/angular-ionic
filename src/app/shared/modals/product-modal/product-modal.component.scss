@@ -1,0 +1,14 @@
+.close-modal {
+  float: right;
+}
+ion-content {
+  .product {
+    &__img {
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid #afa7a755;
+      box-shadow: 2px 2px 10px -2px #131315;
+      margin-bottom: 8px;		
+    }
+  } 
+}

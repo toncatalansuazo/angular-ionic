@@ -19,6 +19,6 @@ export const stopLoadingModal = createAction(uiActionTypes.STOP_LOADING_MODAL);
 export const setError = createAction(uiActionTypes.SET_ERROR,
     props<{ error: string }>()
 );
-export const showProductInModal = createAction(uiActionTypes.SHOW_PRODUCT_IN_MODAL,
-    props<{ product: Product, mode: ProductModalType }>()
-);
+// export const showProductInModal = createAction(uiActionTypes.SHOW_PRODUCT_IN_MODAL,
+//     props<{ product: Product, mode: ProductModalType }>()
+// );

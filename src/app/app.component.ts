@@ -16,27 +16,32 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      color: 'primary'
     },
     {
-      title: 'Ordenes Completadas',
+      title: 'Ordenes Completadas Detalle',
       url: '/orders/completed',
-      icon: 'home'
+      icon: 'checkmark',
+      color: 'success'
     },
     {
-      title: 'Ordenes Pendientes',
+      title: 'Ordenes Pendientes Detalle',
       url: '/orders/pending',
-      icon: 'home'
+      icon: 'alert',
+      color: 'danger'
     },
     {
-      title: 'Por Enviar',
+      title: 'Por Enviar Detalle',
       url: '/orders/to-deliver',
-      icon: 'home'
+      icon: 'send',
+      color: 'warning'
     },
     {
-      title: 'Productos',
+      title: 'Productos Detalle',
       url: '/products',
-      icon: 'home'
+      icon: 'nutrition',
+      color: 'tertiary'
     }
   ];
 

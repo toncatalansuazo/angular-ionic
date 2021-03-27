@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -13,16 +10,18 @@ import { ToDeliverComponent } from './to-deliver/to-deliver.component';
 import { DetailComponent as DetailOrderComponent } from './detail/detail.component';
 import { OrderRoute } from './OrderRoute';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PivotPipe } from 'src/app/shared/pipes/pivot.pipe';
 import { fromOrderReducer, fromOrderEffects } from './store';
 import { EffectsModule } from '@ngrx/effects';
+import { ProductModalService } from 'src/app/shared/modals/product-modal/product-modal.service';
 
 @NgModule({
+  declarations: [
+    CompletedOrdersComponent, 
+    PendingComponent, 
+    ToDeliverComponent,
+    DetailOrderComponent
+  ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule,
     SharedModule,
     NgxDatatableModule,
     RouterModule.forChild([
@@ -50,10 +49,6 @@ import { EffectsModule } from '@ngrx/effects';
       maxAge: 25
     })
   ],
-  declarations: [
-    CompletedOrdersComponent, 
-    PendingComponent, 
-    ToDeliverComponent,
-    DetailOrderComponent]
+  providers: [ProductModalService]
 })
 export class OrdersModule {}

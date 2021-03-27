@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, tap } from 'rxjs/operators';
 import { Product } from 'src/app/core/http/product/product.model';
 import { ProductModalType } from 'src/app/model/ProductModalType';
-import { ProductModalComponent } from '../modal/product-modal/product-modal.component';
+import { ProductModalComponent } from '../modals/product-modal/product-modal.component';
 import * as fromUiActions from './ui.actions';
 
 @Injectable()
@@ -28,22 +28,22 @@ export class UIEffects {
     await this.loading.dismiss();
   }
 
-  async showProductModal(data: { product: Product, mode: ProductModalType }) {
-    const modal = await this.modalController.create({
-      component: ProductModalComponent, 
-      componentProps: data
-    });
-    return await modal.present();
-  }
+  // async showProductModal(data: { product: Product, mode: ProductModalType }) {
+  //   const modal = await this.modalController.create({
+  //     component: ProductModalComponent, 
+  //     componentProps: data
+  //   });
+  //   return await modal.present();
+  // }
 
-  showProductInModal$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromUiActions.showProductInModal),
-      tap((params) => {
-        this.showProductModal({ product: params.product, mode: params.mode });
-      })
-    )
-  , { dispatch: false });
+  // showProductInModal$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(fromUiActions.showProductInModal),
+  //     tap((params) => {
+  //       this.showProductModal({ product: params.product, mode: params.mode });
+  //     })
+  //   )
+  // , { dispatch: false });
 
   loadingModal$ = createEffect(() =>
     this.actions$.pipe(
@@ -67,7 +67,6 @@ export class UIEffects {
   
 
   constructor(
-    private modalController: ModalController,
     private actions$: Actions,
     private router: Router,
     private loadingController: LoadingController) {}

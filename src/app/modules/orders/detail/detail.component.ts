@@ -14,6 +14,7 @@ import { fromUiActions, fromUiSelectors } from 'src/app/shared/store';
 import { ProductModalType } from 'src/app/model/ProductModalType';
 import { fromOrdersRoute } from '../OrderRoute';
 import { DeliveryInfo } from 'src/app/core/http/order/order.model';
+import { ProductModalService } from 'src/app/shared/modals/product-modal/product-modal.service';
 
 @Component({
   selector: 'app-detail',
@@ -33,7 +34,8 @@ export class DetailComponent extends Destroyer implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<fromOrder.OrderState>,
               private router: Router,
-              private formGroup: FormBuilder) {
+              private formGroup: FormBuilder,
+              private prodModalSrv: ProductModalService) {
     super();
     this.createTransportForm();
     this.setUpDeliveryForm();
@@ -87,7 +89,8 @@ export class DetailComponent extends Destroyer implements OnInit {
   
   showImage(product: Product, $event: MouseEvent): void {
     $event.stopPropagation();
-    this.store.dispatch(fromUiActions.showProductInModal({ product, mode: ProductModalType.DETAIL_IN_ORDER }));
+    this.prodModalSrv.showProductModal({product, mode: ProductModalType.DETAIL_IN_ORDER});
+    // this.store.dispatch(fromUiActions.showProductInModal({ product, mode: ProductModalType.DETAIL_IN_ORDER }));
   }
 
   navigateBack() {

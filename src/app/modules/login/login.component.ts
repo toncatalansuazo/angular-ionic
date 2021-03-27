@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './User';
 import { Destroyer } from 'src/app/utils/Destroyer';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscriber } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer';
@@ -18,12 +18,11 @@ export class LoginComponent extends Destroyer implements OnInit {
   loginForm: FormGroup;
   error$: Observable<string>;
   passwordType = 'password';
-
   constructor(private store: Store<fromRoot.State>,
     private formBuilder: FormBuilder) {
     super();
   }
-
+  
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', [

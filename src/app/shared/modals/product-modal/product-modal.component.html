@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div title-template-header>
+        {{ product.name }}
+        <button class="close-modal" ion-button (click)="dismiss()">
+          Cancelar
+        </button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="product">
+    <ion-item>
+      <img class="product__img" src="{{ product.featured }}" />
+    </ion-item>
+    <ion-item>
+      <h2>{{ product.name }}</h2>
+    </ion-item>
+    <div *ngIf="mode === 'DETAIL IN ORDER'; else productDetail">
+      <ion-item>
+        <p>Total Comprado {{ product.pivot | pivotFormat }}</p>
+      </ion-item>
+      <ion-item>
+        <p>
+          Precio Pagado $ {{ product.pivot.final_price }} por cada
+          {{ product.pivot.unit }}
+        </p>
+      </ion-item>
+    </div>
+    <ng-template #productDetail>
+      <ion-item>
+        <p>Precio Actual $ {{ product.price }} por cada {{ product.unit }}</p>
+      </ion-item>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <input label="name" formControlName="name" type="text" />
+        <input label="name" formControlName="price" type="text" />
+        <input label="name" formControlName="unit" type="text" />
+        <button>Actualizar</button>
+      </form>
+    </ng-template>
+  </ion-list>
+</ion-content>

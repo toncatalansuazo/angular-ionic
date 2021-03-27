@@ -27,7 +27,6 @@ import { fromUiEffects } from './shared/store';
     IonicModule.forRoot(),
     AppRoutingModule,
     CoreModule,
-    // SharedModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateSerializability: true,

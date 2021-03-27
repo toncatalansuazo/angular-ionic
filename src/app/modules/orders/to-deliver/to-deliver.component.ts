@@ -17,7 +17,6 @@ import { OrderRoute } from '../OrderRoute';
 })
 export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
   orders$: Observable<Order[]>;
-
   onSelectedOrder(row: any): void {
     this.store.dispatch(fromOrderAction.selectOrder({ order: row, fromRoute: OrderRoute.TO_DELIVER }));
   }
@@ -30,6 +29,7 @@ export class ToDeliverComponent extends OrderTableAbstract implements OnInit {
     this.setTableConfiguration();
     this.fetchPendingOrders();
     this.currentOrdersInList$ = this.store.select(fromOrderSelectors.getToDeliver);
+    this.lastOrderSelected$ = this.store.select(fromOrderSelectors.getSelectedOrder);
   }
 
   fetchPendingOrders() {

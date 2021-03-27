@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { from, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { Product } from 'src/app/core/http/product/product.model';
 import { ProductModalType } from 'src/app/model/ProductModalType';
-import { fromUiActions } from 'src/app/shared/store';
+import { ProductModalComponent } from 'src/app/shared/modals/product-modal/product-modal.component';
+import { ProductModalService } from 'src/app/shared/modals/product-modal/product-modal.service';
+import { fromUiActions, fromUiReducers, fromUiSelectors } from 'src/app/shared/store';
 import { fromProductSelector } from './store';
 import * as fromProductAction from './store/product.action';
 import * as fromProductReducer from './store/product.reducer';
@@ -21,14 +24,19 @@ export class ProductComponent implements OnInit {
   products$: Observable<Product[]>;
   columMode: any;
   columns: ({ name: string; prop: string; maxWidth: number; } | { name: string; prop: string; maxWidth?: undefined; })[];
-  
+  isLoading$: Observable<boolean>;
+
   constructor(private store: Store<fromProductReducer.State>,
-    private router: Router) { }
+    private router: Router,
+    private productModal: ProductModalService,
+    private modalController: ModalController
+    ) { }
 
   ngOnInit() {
     this.setTableConfiguration();
     this.store.dispatch(fromProductAction.getProducts());
     this.listenProductByRoute();
+    this.isLoading$ = this.store.select(fromUiSelectors.getIsLoadingProgressBar);
   }
 
   onFilterList($event) {
@@ -55,8 +63,17 @@ export class ProductComponent implements OnInit {
 
   onActivate(event) {
     if (event.type === 'click') {
-        this.store.dispatch(fromUiActions.showProductInModal({ product: event.row, mode: ProductModalType.DETAIL }))
+      this.showProductModal({ product: event.row, mode: ProductModalType.DETAIL });
+      // this.productModal.showProductModal({ product: event.row, mode: ProductModalType.DETAIL });
+        // this.store.dispatch(fromUiActions.showProductInModal({ product: event.row, mode: ProductModalType.DETAIL }))
     }
+  }
+  async showProductModal(data: { product: Product, mode: ProductModalType }) {
+    const modal = await this.modalController.create({
+      component: ProductModalComponent, 
+      componentProps: data
+    });
+    return await modal.present();
   }
 
   setTableConfiguration() {

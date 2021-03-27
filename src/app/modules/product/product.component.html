@@ -2,6 +2,9 @@
   <div title-template-header>Lista Productos</div>
 </app-header-template>
 <ion-content>
+  <ion-progress-bar *ngIf="isLoading$| async"
+    type="indeterminate">
+  </ion-progress-bar>
   <ion-searchbar 
       inputmode="search"
       (ionInput)="onFilterList($event)"

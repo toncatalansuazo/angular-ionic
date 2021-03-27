@@ -2,7 +2,7 @@
   <div title-template-header>Orderenes Pendientes</div>
 </app-header-template>
 <ion-content>
-  <ion-progress-bar *ngIf="isLoading$ | async"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" *ngIf="isLoading$ | async"></ion-progress-bar>
   <ion-searchbar 
       inputmode="search"
       (ionInput)="onFilterList($event)"

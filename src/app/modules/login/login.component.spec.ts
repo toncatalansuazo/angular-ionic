@@ -70,13 +70,13 @@ fdescribe('LoginComponent', () => {
     beforeEach(() => {
       fillAndTouchForm();
     })
-    it('and clicking submit button it should dispatch two actions', () => {
+    it('and clicking submit button it should dispatch two actions',  () => {
       const loginBtn: DebugElement = de.query(By.css('form'));
       console.log(loginBtn);
-      loginBtn.triggerEventHandler('submit', null);
+      loginBtn.triggerEventHandler('submit', new MouseEvent('click'));
       fixture.detectChanges();
       expect(dispatchSpy).toHaveBeenCalledTimes(2);
-      expect(dispatchSpy).toHaveBeenCalledWith(fromAuthAction.login(mockCredentials));
+      expect(dispatchSpy).toHaveBeenCalledWith(fromAuthAction.login({user: mockCredentials}));
       expect(dispatchSpy).toHaveBeenCalledWith(fromUiActions.startLoadingModal({message: 'Cargando...'}));
     });
   });

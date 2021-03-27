@@ -4,6 +4,7 @@
   }
 }
 .container {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   &__delivery {
     &-form {
       width: 100%;
@@ -21,6 +22,9 @@
   ion-label, ion-note {
     font-size: 15px;
     color: #000;
+  }
+  ion-item-divider > ion-label {
+    color: rgb(255, 255, 255);
   }
   .item-native {
     background-color: transparent;

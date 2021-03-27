@@ -186,7 +186,7 @@
               <ion-button 
                 size="large"
                 type="submit"
-                [disabled]="deliveryFG.invalid"
+                [disabled]="deliveryFG.invalid || (isLoadingProgBar$| async)"
                 expand="block">
                 Enviar
               </ion-button>

@@ -2,7 +2,7 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar class="ion-header-color">
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -10,7 +10,7 @@
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-icon slot="start" [name]="p.icon" [color]="p.color" ></ion-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>
@@ -18,7 +18,7 @@
           </ion-menu-toggle>
           <ion-menu-toggle (click)="logout()" auto-hide="false">
             <ion-item>
-              <ion-icon slot="start" [name]="key"></ion-icon>
+              <ion-icon slot="start" [name]="'key'"></ion-icon>
               <ion-label>
                 Logout
               </ion-label>
