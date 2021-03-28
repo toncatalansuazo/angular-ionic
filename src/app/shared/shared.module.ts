@@ -10,6 +10,7 @@ import { ProductReadyDirective } from './decorators/product-ready/product-ready.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ProductModalComponent } from './modals/product-modal/product-modal.component';
+import { HeaderModalComponent } from './ui/header-modal/header-modal.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +19,11 @@ import { ProductModalComponent } from './modals/product-modal/product-modal.comp
     PivotPipe,
     DragDropDirective,
     ProductReadyDirective,
-    ProductModalComponent
+    ProductModalComponent,
+    HeaderModalComponent
   ],
   imports: [
     IonicModule,
-    // CommonModule,
-    // FormsModule,
-    // ReactiveFormsModule
   ],
   exports: [
     HeaderTemplateComponent,
@@ -35,7 +34,8 @@ import { ProductModalComponent } from './modals/product-modal/product-modal.comp
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
-    ProductModalComponent
+    ProductModalComponent,
+    HeaderModalComponent
   ],
   providers: []
 })

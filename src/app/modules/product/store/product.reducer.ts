@@ -27,5 +27,15 @@ export const productReducer = createReducer(initialState,
   on(fromProductActions.setProductSelected, (state, product) => ({
     ...state,
     product
-  }))
+  })),
+  on(fromProductActions.updateProductSuccess, (state, { product }) => {
+    const products = [...state.products];
+    const i = state.products.findIndex(productStore => productStore.id === product.id)
+    products[i] = product;
+    return {
+      ...state,
+      products
+    };
+  })
+  
 );

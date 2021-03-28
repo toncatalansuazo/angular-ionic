@@ -42,13 +42,6 @@ export class DetailComponent extends Destroyer implements OnInit {
     this.getOriginNavigation();
     this.isLoadingProgBar$ = this.store.select(fromUiSelectors.getIsLoadingProgressBar);
   }
-
-  getOriginNavigation() {
-    this.activatedRoute.queryParams.pipe(
-      first(),
-    ).subscribe((params: Params) => this.fromRoute = params.fromRoute);
-  }
-
   
   ngOnInit() {
     this.order$ = this.store.select(fromOrderSelectors.getSelectedOrder);
@@ -78,11 +71,9 @@ export class DetailComponent extends Destroyer implements OnInit {
   onSetDelivery() {
     const deliveryInfo: DeliveryInfo = this.deliveryFG.value;
     if (this.comesFromPendingRoute(this.fromRoute)) {
-      // bug call html function
       this.store.dispatch(fromOrderAction.setDeliveryInfoToPendingOrder({ deliveryInfo }));
     }
     if (this.comesFromToDeliverRoute(this.fromRoute)) {
-      // bug call html function
       this.store.dispatch(fromOrderAction.setDeliveryInfoToToDeliverOrder({ deliveryInfo }));
     }
   }
@@ -90,13 +81,18 @@ export class DetailComponent extends Destroyer implements OnInit {
   showImage(product: Product, $event: MouseEvent): void {
     $event.stopPropagation();
     this.prodModalSrv.showProductModal({product, mode: ProductModalType.DETAIL_IN_ORDER});
-    // this.store.dispatch(fromUiActions.showProductInModal({ product, mode: ProductModalType.DETAIL_IN_ORDER }));
   }
 
   navigateBack() {
     this.activatedRoute.queryParams.pipe(
       first(),
       ).subscribe((params: Params) => this.router.navigate([params.fromRoute]));
+  }
+
+  getOriginNavigation() {
+    this.activatedRoute.queryParams.pipe(
+      first(),
+    ).subscribe((params: Params) => this.fromRoute = params.fromRoute);
   }
     
   private listenPayment(): void {

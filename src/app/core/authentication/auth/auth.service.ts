@@ -11,6 +11,7 @@ export interface AuthResponse {
 }
 
 export const AUTH_TOKEN = 'ECOMMERCE_TOKEN';
+export const USER_PASSWORD = 'USER_PASSWORD';
 
 @Injectable({
   providedIn: 'root'

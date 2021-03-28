@@ -128,7 +128,7 @@
       <div *ngIf="order.delivered === 0; else prepared">
         <ion-item>
           <p>
-            *Envia email a cliente avisando que su pedido se encuentra preparado y
+            *Presiona el boton en la parte inferior `Orden Preparada` para enviar email a cliente avisando que su pedido se encuentra preparado y
             listo para ser enviado.
           </p>
         </ion-item>
@@ -203,7 +203,7 @@
     <ion-badge color="dark" >
       {{ highlighted?.length }}/{{ (products$ | async)?.length }}
     </ion-badge>
-    <ion-fab-button color="{{ highlighted?.length === (products$ | async)?.length ? 'light': 'danger' }}"
+    <ion-fab-button color="{{ highlighted?.length === (products$ | async)?.length ? 'success': 'danger' }}"
       
       >
       <ion-icon name="cart-outline"></ion-icon>

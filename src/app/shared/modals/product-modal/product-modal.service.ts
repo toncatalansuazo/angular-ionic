@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Product } from 'src/app/core/http/product/product.model';
+import { ConfirmOpt } from 'src/app/model/modals/confirm-opt';
 import { ProductModalType } from 'src/app/model/ProductModalType';
 import { ProductModalComponent } from './product-modal.component';
 

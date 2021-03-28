@@ -30,4 +30,9 @@ export class ConfigurationEndpoint {
     static getProductsEndpoint(): string {
         return `${this.ecommerceEndpoint}/products`;
     }
+
+    
+    static getProductEndpoint(): string {
+        return `${this.ecommerceEndpoint}/product`;
+    }
 }

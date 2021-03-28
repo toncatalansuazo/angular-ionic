@@ -32,6 +32,16 @@ export class ProductEffects {
     })
   ));
 
+  updateProduct$ = createEffect(() => this.actions$.pipe(
+    ofType(fromProductActions.updateProduct),
+    switchMap(({ product }) => {
+      return this.productService.updateProduct(product).pipe(
+        map((res: ProductResponse) => fromProductActions.updateProductSuccess({ product: res.data[0]}) ),
+        catchError(err => of(err))
+      );
+    })
+  ));
+
   constructor(private actions$: Actions,
     private productService: ProductService,
     private store: Store<fromUiReducers.State>) {}

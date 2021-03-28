@@ -24,6 +24,10 @@
           *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
           La contrasena debe tener al menos 3 caracteres.
         </div>
+        <div class="form__persist">
+          <ion-label>Guardar contraseña</ion-label>
+          <ion-checkbox slot="end" (ionChange)="onChange($event)"></ion-checkbox>
+        </div>
         <div class="form__login ion-text-center">
           <ion-spinner *ngIf="loading$ | async" name="bubbles"></ion-spinner>
         </div>

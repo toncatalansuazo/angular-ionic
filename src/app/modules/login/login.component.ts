@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../app.reducer';
 import { fromUiActions, fromUiSelectors } from '../../shared/store';
 import { fromAuthAction, fromAuthReducer } from '../../core/store';
+import { USER_PASSWORD } from 'src/app/core/authentication/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,12 +25,13 @@ export class LoginComponent extends Destroyer implements OnInit {
   }
   
   ngOnInit() {
+    const psw: string = localStorage.getItem(USER_PASSWORD) || '';
     this.loginForm = this.formBuilder.group({
       email: ['', [
         Validators.required,
         Validators.min(3),
         Validators.email
-      ]], password: ['' , [
+      ]], password: [psw , [
         Validators.required,
         Validators.min(3),
         // TODO min 1 number and one special character 
@@ -47,5 +49,14 @@ export class LoginComponent extends Destroyer implements OnInit {
 
   showPassword() {
     this.passwordType = (this.passwordType === 'password') ? 'text' : 'password';
+  }
+
+  onChange($event: { detail: { checked: boolean } }) {
+    if ($event.detail.checked) {
+      const pswFc = this.loginForm.get('password');
+      localStorage.setItem(USER_PASSWORD, pswFc && pswFc.value);
+    } else {
+      localStorage.clear();
+    }
   }
 }

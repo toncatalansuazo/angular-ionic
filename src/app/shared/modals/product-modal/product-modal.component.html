@@ -1,15 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      <div title-template-header>
-        {{ product.name }}
-        <button class="close-modal" ion-button (click)="dismiss()">
-          Cancelar
-        </button>
-      </div>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header-modal
+  [title]="product.name"
+  (dismiss)="onDismiss()">
+</app-header-modal>
 
 <ion-content>
   <ion-list class="product">
@@ -34,17 +26,17 @@
       <ion-item>
         <p>Precio Actual $ {{ product.price }} por cada {{ product.unit }}</p>
       </ion-item>
-      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-        <ion-item>
+      <form [formGroup]="productForm" color="warn" (ngSubmit)="onSubmit()">
+        <ion-item color="warn">
           <ion-label position="floating">Nombre</ion-label>
-          <ion-input clearInput formControlName="name"  value="clear me"></ion-input>
+          <ion-input type="text" clearInput formControlName="name"  value="clear me"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item color="warn">
           <ion-label position="floating">Precio</ion-label>
-          <ion-input clearInput formControlName="price" value="clear me"></ion-input>
+          <ion-input type="number" clearInput formControlName="price" value="clear me"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label>Unidad a vender(de kilo, medio, 100 grs.)</ion-label>
+        <ion-item color="warn">
+          <ion-label>Unidad a vender (Kilo, Medio, grs.)</ion-label>
           <ion-select formControlName="unit" ok-text="OK" cancel-text="CANCELAR">
             <ion-select-option value="nes">PULL MAN</ion-select-option>
             <ion-select-option value="100 grs.">100 grs.</ion-select-option>
@@ -54,12 +46,21 @@
             <ion-select-option value="1 unidad.">1 unidad.</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item color="warn">
           <ion-label position="floating">Stock</ion-label>
-          <ion-input clearInput formControlName="stock" value="clear me"></ion-input>
+          <ion-input clearInput type="number" formControlName="stock" value="clear me"></ion-input>
         </ion-item>
-        
-        <ion-button type="submit" color="primary">Actualizar</ion-button>
+        <ion-item>
+          <ion-button type="button"
+            (click)="onReset()"
+            color="primary">
+            Restaurar
+          </ion-button>
+          <ion-button type="submit"
+           [disabled]="productForm.invalid" color="primary">
+           Actualizar
+          </ion-button>
+        </ion-item>
       </form>
     </ng-template>
   </ion-list>

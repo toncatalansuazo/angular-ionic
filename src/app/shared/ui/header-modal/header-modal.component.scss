@@ -1,0 +1,11 @@
+.ion-header-color {
+  --background: linear-gradient(346deg, #f59c53e3, #985e2f) !important;
+  color: white;
+  button {
+    background-color: transparent;
+    float: right;
+    ion-icon {
+      transform: scale(2.3);
+    }
+  } 
+}

@@ -35,4 +35,14 @@
     &__icon {
        margin-right: 5%; 
     }
+    &__persist {
+        margin-top: 3%;
+        padding: 3px;
+        display: flex;
+        justify-content: flex-end;
+        ion-label {
+            margin-right: 2%;
+        }
+        
+    }
 }

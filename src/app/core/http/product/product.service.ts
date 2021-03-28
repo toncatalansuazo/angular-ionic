@@ -8,12 +8,19 @@ import { Product, ProductResponse } from './product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  get url(): string {
+  get urlProducts(): string {
     return ConfigurationEndpoint.getProductsEndpoint();
+  }
+  get urlProduct(): string {
+    return ConfigurationEndpoint.getProductEndpoint();
   }
 
   getProducts(): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(this.url);
+    return this.http.get<ProductResponse>(this.urlProducts);
+  }
+
+  updateProduct(product: Product): Observable<ProductResponse> {
+    return this.http.put<ProductResponse>(this.urlProduct, product);
   }
 
   constructor(private http: HttpClient) { }
